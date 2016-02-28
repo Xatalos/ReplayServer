@@ -15,20 +15,35 @@
         
         <form method="POST" action="/newreplay" enctype="multipart/form-data">
             <input type="text" name="name" placeholder="Replay name"/>
-            <input type="text" name="version" placeholder="Game version"/>
-            <input type="text" name="gameDate" placeholder="Game date"/>
+            <select name="version">
+                <option value="0.6.0">0.6.0</option>
+                <option value="0.5.1">0.5.1</option>
+                <option value="0.5.0">0.5.0</option>
+            </select>
             <input type="file" name="replay" id="replay"/>
             <input type="submit" value="Add!"/>
         </form>
 
         <h2>Replays</h2>
+        
+        <form method="GET" action="/filterreplays">
+            <select name="sort">
+                <option value="newest">Sort By Newest</option>
+                <option value="downloads">Sort By Most Downloaded</option>
+                <option value="name">Sort By Name</option>
+            </select>
+            <input type="submit" value="Filter replays"/>
+        </form>
 
         <table>
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Version</th>
                     <th>Date</th>
+                    <th>Version</th>
+                    <th>Players</th>
+                    <th>Downloads</th>
+                    <th>Download</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,9 +51,16 @@
                     <td>No replays</td>
                 </tr>
                 <tr th:each="replay : ${replays}">
-                    <td><a th:href="@{/{id}(id=${replay.id})}" th:text="${replay.name}" /></td>
-                    <td><span th:text="${replay.version}" /></td>
+                    <td><span th:text="${replay.name}" /></td>
                     <td><span th:text="${replay.gameDate}" /></td>
+                    <td><span th:text="${replay.version}" /></td>
+                    <td><span th:text="${replay.players}" /></td>
+                    <td><span th:text="${replay.downloads}" /></td>
+                    <td>
+                        <form th:method="POST" th:action="@{/{id}(id=${replay.id})}">
+                            <input type="submit" value="Download"/>
+                        </form>
+                    </td>
                 </tr>
             </tbody>
         </table>

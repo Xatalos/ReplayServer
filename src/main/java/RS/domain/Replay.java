@@ -3,6 +3,7 @@ package RS.domain;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
@@ -21,13 +22,13 @@ public class Replay extends AbstractPersistable<Long> {
     @NotBlank
     private String name;
     
-    @NotBlank
     private String gameDate;
     
-    @NotBlank
     private String version;
     
     private ArrayList<String> players;
+    
+    private int downloads;
 
     public byte[] getContent() {
         return content;
@@ -69,7 +70,11 @@ public class Replay extends AbstractPersistable<Long> {
         this.players = players;
     }
 
+    public int getDownloads() {
+        return downloads;
+    }
 
-    
-    
+    public void setDownloads(int downloads) {
+        this.downloads = downloads;
+    }
 }
