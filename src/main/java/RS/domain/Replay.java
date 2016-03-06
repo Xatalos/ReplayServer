@@ -1,15 +1,16 @@
 package RS.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
@@ -22,12 +23,15 @@ public class Replay extends AbstractPersistable<Long> {
     @NotBlank
     private String name;
     
-    private String gameDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date gameDate;
     
     private String version;
     
-    private ArrayList<String> players;
+    @OneToMany(mappedBy = "replay", fetch = FetchType.EAGER)
+    private List<Player> players;
     
+    @Column(length = 2147483647, name = "downloads")
     private int downloads;
 
     public byte[] getContent() {
@@ -38,7 +42,7 @@ public class Replay extends AbstractPersistable<Long> {
         return name;
     }
 
-    public String getGameDate() {
+    public Date getGameDate() {
         return gameDate;
     }
 
@@ -46,7 +50,7 @@ public class Replay extends AbstractPersistable<Long> {
         return version;
     }
 
-    public ArrayList<String> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
@@ -58,7 +62,7 @@ public class Replay extends AbstractPersistable<Long> {
         this.name = name;
     }
 
-    public void setGameDate(String gameDate) {
+    public void setGameDate(Date gameDate) {
         this.gameDate = gameDate;
     }
 
@@ -66,7 +70,7 @@ public class Replay extends AbstractPersistable<Long> {
         this.version = version;
     }
 
-    public void setPlayers(ArrayList<String> players) {
+    public void setPlayers(List<Player> players) {
         this.players = players;
     }
 
