@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,13 +43,13 @@ public class ReplayController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String listReplays(Model model) {
-        model.addAttribute("replays", replayRepository.findAll());
         Pageable pageable = new PageRequest(0, 25, Sort.Direction.DESC, "gameDate");
         Page<Replay> riddlePage = replayRepository.findAll(pageable);
         model.addAttribute("replays", riddlePage.getContent());
         return "replays";
     }
-
+    
+    @Transactional
     @RequestMapping(value = "/searchreplays", method = RequestMethod.GET)
     public String searchReplays(Model model, @RequestParam String name, @RequestParam String version) {
         Pageable pageable = new PageRequest(0, 50, Sort.Direction.DESC, "gameDate");
