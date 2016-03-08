@@ -37,24 +37,41 @@ public class ReplayController {
 
     @Autowired
     private ReplayRepository replayRepository;
-    
+
     @Autowired
     private PlayerRepository playerRepository;
 
     @RequestMapping(method = RequestMethod.GET)
     public String listReplays(Model model) {
-        Pageable pageable = new PageRequest(0, 25, Sort.Direction.DESC, "gameDate");
-        Page<Replay> riddlePage = replayRepository.findAll(pageable);
-        model.addAttribute("replays", riddlePage.getContent());
+        Pageable pageable = new PageRequest(0, 30, Sort.Direction.DESC, "gameDate");
+        Page<Replay> replayPage = replayRepository.findAll(pageable);
+        model.addAttribute("replays", replayPage.getContent());
         return "replays";
     }
-    
+
+    @Transactional
+    @RequestMapping(value = "/topreplays", method = RequestMethod.GET)
+    public String topReplays(Model model, @RequestParam String sort) {
+        Pageable pageable = new PageRequest(0, 30, Sort.Direction.DESC, "gameDate");
+        if (sort.equals("downloads")) {
+            pageable = new PageRequest(0, 30, Sort.Direction.DESC, "downloads");
+        }
+        Page<Replay> replayPage = replayRepository.findAll(pageable);
+        model.addAttribute("replays", replayPage.getContent());
+        return "replays";
+    }
+
     @Transactional
     @RequestMapping(value = "/searchreplays", method = RequestMethod.GET)
     public String searchReplays(Model model, @RequestParam String name, @RequestParam String version) {
-        Pageable pageable = new PageRequest(0, 50, Sort.Direction.DESC, "gameDate");
-        Page<Replay> riddlePage = replayRepository.findByNameContainingAndVersion(pageable, name, version);
-        model.addAttribute("replays", riddlePage.getContent());
+        Pageable pageable = new PageRequest(0, 30, Sort.Direction.DESC, "gameDate");
+        Page<Replay> replayPage;
+        if (version.equals("any")) {
+            replayPage = replayRepository.findByNameContaining(pageable, name);
+        } else {
+            replayPage = replayRepository.findByNameContainingAndVersion(pageable, name, version);
+        }
+        model.addAttribute("replays", replayPage.getContent());
         return "replays";
     }
 
@@ -86,18 +103,18 @@ public class ReplayController {
     @RequestMapping(value = "/{id}/download", method = RequestMethod.GET)
     public ResponseEntity<byte[]> getFile(@PathVariable Long id) {
         Replay replay = replayRepository.findOne(id);
- 
+
         final HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=" + replay.getName());
         headers.setContentType(MediaType.parseMediaType("application/octet-stream"));
-        
+
         return new ResponseEntity<>(replay.getContent(), headers, HttpStatus.CREATED);
     }
-    
+
     @RequestMapping(value = "/{id}/player", method = RequestMethod.POST)
     public String addRandomPlayer(@PathVariable Long id) {
         Replay replay = replayRepository.findOne(id);
-        
+
         Player player = new Player();
         ArrayList<String> potentialNames = new ArrayList<String>();
         potentialNames.add("dynarii");
@@ -105,21 +122,21 @@ public class ReplayController {
         potentialNames.add("triplesauced");
         player.setName(potentialNames.get(new Random().nextInt(3)));
         player.setReplay(replay);
-        
+
         playerRepository.save(player);
-        
+
         return "redirect:/";
     }
-    
+
     // TODO: changing downloads value still causes data exception: string data, right truncation?
     @RequestMapping(value = "/{id}/adddownload", method = RequestMethod.POST)
     public String addDownload(@PathVariable Long id) {
         Replay replay = replayRepository.findOne(id);
-        
+
         replay.setDownloads(replay.getDownloads() + 1);
-        
+
         replayRepository.save(replay);
-        
+
         return "redirect:/";
     }
 }

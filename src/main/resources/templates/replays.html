@@ -26,9 +26,18 @@
 
         <h2>Replays</h2>
 
+        <form method="GET" action="/topreplays">
+            <select name="sort">
+                <option value="newest">Show Most Recent</option>
+                <option value="downloads">Show Most Downloaded</option>
+            </select>
+            <input type="submit" value="Show Replays"/>
+        </form>
+
         <form method="GET" action="/searchreplays">
             <input type="text" name="name" placeholder="Replay name contains..."/>
             <select name="version">
+                <option value="any">Any Version</option>
                 <option value="0.6.0">0.6.0</option>
                 <option value="0.5.1">0.5.1</option>
                 <option value="0.5.0">0.5.0</option>
