@@ -16,10 +16,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.stereotype.Controller;
@@ -50,7 +46,7 @@ public class ReplayController {
     }
 
     @Transactional
-    @RequestMapping(value = "/topreplays", method = RequestMethod.GET)
+    @RequestMapping(value = "/topreplaystl", method = RequestMethod.GET)
     public String topReplays(Model model, @RequestParam String sort) {
         Pageable pageable = new PageRequest(0, 30, Sort.Direction.DESC, "gameDate");
         if (sort.equals("downloads")) {
@@ -62,7 +58,7 @@ public class ReplayController {
     }
 
     @Transactional
-    @RequestMapping(value = "/searchreplays", method = RequestMethod.GET)
+    @RequestMapping(value = "/searchreplaystl", method = RequestMethod.GET)
     public String searchReplays(Model model, @RequestParam String name, @RequestParam String version) {
         Pageable pageable = new PageRequest(0, 30, Sort.Direction.DESC, "gameDate");
         Page<Replay> replayPage;
@@ -88,7 +84,11 @@ public class ReplayController {
 
         replay.setGameDate(new Date());
 
-        replay.setContent(file.getBytes());
+        replay.setContent("download_url");
+        
+        replay.setGameMode("Deathmatch");
+        
+        replay.setArena("Pillar Arena");
 
         List<Player> players = new ArrayList<Player>();
         replay.setPlayers(players);
@@ -101,14 +101,9 @@ public class ReplayController {
     }
 
     @RequestMapping(value = "/{id}/download", method = RequestMethod.GET)
-    public ResponseEntity<byte[]> getFile(@PathVariable Long id) {
+    public String getFile(@PathVariable Long id) {
         Replay replay = replayRepository.findOne(id);
-
-        final HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment; filename=" + replay.getName());
-        headers.setContentType(MediaType.parseMediaType("application/octet-stream"));
-
-        return new ResponseEntity<>(replay.getContent(), headers, HttpStatus.CREATED);
+        return "redirect:/"; // downloading inactive for now - check older commits etc. for download related code
     }
 
     @RequestMapping(value = "/{id}/player", method = RequestMethod.POST)
