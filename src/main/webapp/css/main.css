@@ -6,7 +6,7 @@ body, html {
 
 #background {
   background-color: #303035;
-  color: #cfcfca;
+  color: #cccccc;
   min-height: 100%;
   width: 100%; }
 
@@ -20,44 +20,32 @@ body, html {
 #area {
   position: relative;
   left: 25%;
-  width: 67.5%;
-  margin: 1%;
-  margin-left: 5%;
-  display: inline-block; }
+  width: 71%;
+  display: inline-block;
+  padding: 2%;
+  overflow: auto; }
   #area p {
     margin: 0;
     padding: 0; }
 
-.replay-thumbnail {
-  background-color: #1f1f24;
-  text-align: center;
-  margin-bottom: 1%;
-  border-radius: 5%;
-  transition: background-color 0.2s;
-  display: inline-block; }
-  .replay-thumbnail img.thumbnail {
-    padding-top: 5%;
-    width: 80%;
-    height: auto;
-    border-radius: inherit; }
-  @media (min-width: 960px) {
-    .replay-thumbnail {
-      width: 22%;
-      margin: 0.25%; } }
-  @media (min-width: 500px) and (max-width: 960px) {
-    .replay-thumbnail {
-      width: 30.33333%;
-      margin: 0.5%; } }
-  @media (min-width: 300px) and (max-width: 500px) {
-    .replay-thumbnail {
-      width: 47%;
-      margin: 1%; } }
-  @media (max-width: 300px) {
-    .replay-thumbnail {
-      width: 100%;
-      margin: 0%; } }
+form.form {
+  padding: 5%; }
 
-.replay-thumbnail:hover {
-  background-color: #17171c; }
+input:not([type=file]), select:not([type=file]) {
+  background-color: #525257;
+  color: #cccccc;
+  border-color: #636368; }
+  input:not([type=file]) :hover, select:not([type=file]) :hover {
+    color: #999999; }
+  input:not([type=file]) :focus, select:not([type=file]) :focus {
+    color: #888888; }
+
+th, td {
+  border-color: #414146 !important;
+  color: #cccccc;
+  font-weight: 100; }
+
+thead tr th {
+  font-weight: bolder !important; }
 
 /*# sourceMappingURL=main.css.map */

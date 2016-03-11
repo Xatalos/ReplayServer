@@ -2,10 +2,13 @@ $bg-color : #303035;
 $sidebar-color : $bg-color + #111;
 $sidebar-width: 25%;
 
-$area-margin: 1%;
-$thumbnail-margin: 3%;
-
 $replay-thumbnail-bg: $bg-color - #111;
+
+$area-padding: 2%;
+
+$form-color: $sidebar-color + #111;
+
+$text-color: #cccccc;
 
 body, html {
   height: 100%;
@@ -16,7 +19,7 @@ body, html {
 
 #background {
   background-color: $bg-color;
-  color: #FFF - $bg-color;
+  color: $text-color;
   min-height: 100%;
   width: 100%;
 }
@@ -32,10 +35,10 @@ body, html {
 #area {
   position: relative;
   left: $sidebar-width;
-  width: 99% - $area-margin * 1.5 - 5% - $sidebar-width;
-  margin: $area-margin;
-  margin-left: 5%;
+  width: 100% - $sidebar-width - $area-padding * 2;
   display: inline-block;
+  padding: $area-padding;
+  overflow: auto;
 
   p {
     margin: 0;
@@ -43,42 +46,34 @@ body, html {
   }
 }
 
-.replay-thumbnail {
-  background-color: $replay-thumbnail-bg;
-  text-align: center;
-  margin-bottom: $area-margin;
-  border-radius: 5%;
-  transition: background-color 0.2s;
-  display: inline-block;
+form.form {
+  padding: 5%;
+}
 
-  img.thumbnail {
-    padding-top: 5%;
-    width: 80%;
-    height: auto;
-    border-radius: inherit;
+input:not([type=file]) {
+  background-color: $form-color;
+  color: $text-color;
+  border-color: $form-color + #111;
+
+  :hover {
+      color: $text-color - #333;
   }
 
-  @media (min-width: 960px) {
-    width: 25% - $thumbnail-margin;
-    margin: $thumbnail-margin / 4 - 0.5%;
-  }
-
-  @media (min-width: 500px) and (max-width: 960px) {
-    width: (100%/3) - $thumbnail-margin;
-    margin: $thumbnail-margin / 3 - 0.5%;
-  }
-
-  @media (min-width: 300px) and (max-width: 500px) {
-    width: 50% - $thumbnail-margin;
-    margin: $thumbnail-margin / 2 - 0.5%;
-  }
-
-  @media (max-width: 300px) {
-    width: 100%;
-    margin: 0%;
+  :focus {
+    color: $text-color - #444;
   }
 }
 
-.replay-thumbnail:hover {
-  background-color: $replay-thumbnail-bg - #080808;
+select {
+  @extend input
+}
+
+th, td {
+  border-color: $sidebar-color !important;
+  color: $text-color;
+  font-weight: 100;
+}
+
+thead tr th {
+  font-weight: bolder !important;
 }

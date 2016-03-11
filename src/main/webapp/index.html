@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
+
 
     <!-- External / Imported CSS -->
     <link rel="stylesheet" href="css/normalize.css">
@@ -9,38 +10,91 @@
     <!-- Custom SASS compiled CSS -->
     <link rel="stylesheet" href="css/main.css">
 
+    <title>Replay Server</title>
+
   </head>
   <body>
     <div id="background">
       <div id="sidebar">
-        <h1> Hi! </h1>
+        <form id="search-form" class="form">
+          <h4>Search</h4>
+          <label for="contains">Filters</label>
+          <input type="text" class="u-full-width" placeholder="Replay name contains.." id="contains">
+          <div class="row">
+            <div class="six columns">
+              <label for="version">Version</label>
+              <select class="u-full-width" id="version">
+                <option value="any">Any</option>
+                <option value="0.6.0">0.6.0</option>
+                <option value="0.5.0">0.5.0</option>
+              </select>
+              <select class="u-full-width" id="version">
+                <option value="exactly">Exactly</option>
+                <option value="or-older">Or older</option>
+                <option value="or-newer">Or newer</option>
+              </select>
+            </div>
+            <div class="six columns">
+              <label>Downloads</label>
+              <input class="u-full-width" type="number" placeholder="1600"></input>
+              <select class="u-full-width" id="version">
+                <option value="exactly">Exactly</option>
+                <option value="or-more">Or more</option>
+                <option value="or-less">Or less</option>
+              </select>
+            </div>
+            <input type="submit" value="Search"></input>
+          </div>
+        </form>
+        <form id="upload-form" class="form">
+          <h4>Upload</h4>
+          <div class="row">
+            <div class="eight columns">
+              <label for="name">Name</label>
+              <input type="text" class="u-full-width" placeholder="Replay name" id="name">
+            </div>
+            <div class="four columns">
+              <label for="version">Version</label>
+              <select class="u-full-width" id="version">
+                <option value="0.6.0">0.6.0</option>
+                <option value="0.5.0">0.5.0</option>
+              </select>
+            </div>
+          </div>
+          <input class="u-full-width" type="file" name="replay" id="replay" class="button"/>
+          <input type="submit" value="Upload"></input>
+        </form>
       </div>
       <div id="area">
-
-          <div class="replay-thumbnail">
-            <img class="thumbnail" src="img/temp-thumbnail.png" alt="thumbnail"> </img>
-            <p> Name of the replay </p>
-          </div>
-          <div class="replay-thumbnail">
-            <img class="thumbnail" src="img/temp-thumbnail.png" alt="thumbnail"> </img>
-            <p> Name of the replay </p>
-          </div>
-          <div class="replay-thumbnail">
-            <img class="thumbnail" src="img/temp-thumbnail.png" alt="thumbnail"> </img>
-            <p> Name of the replay </p>
-          </div>
-          <div class="replay-thumbnail">
-            <img class="thumbnail" src="img/temp-thumbnail.png" alt="thumbnail"> </img>
-            <p> Name of the replay </p>
-          </div>
-          <div class="replay-thumbnail">
-            <img class="thumbnail" src="img/temp-thumbnail.png" alt="thumbnail"> </img>
-            <p> Name of the replay </p>
-          </div>
-          <div class="replay-thumbnail">
-            <img class="thumbnail" src="img/temp-thumbnail.png" alt="thumbnail"> </img>
-            <p> Name of the replay </p>
-          </div>
+        <table class="u-full-width">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Version</th>
+              <th>Date</th>
+              <th>Players</th>
+              <th>Downloads</th>
+              <th>Download</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Allexit vs TripleSlain</td>
+              <th>0.6.0</th>
+              <th>11-03-16</th>
+              <th>
+                <ul>
+                  <li>Allexit</li>
+                  <li>TripleSlain</li>
+                </ul>
+              </th>
+              <th>1600</th>
+              <th>
+              <input type="submit" value="Download"></input>
+              </th>
+            </tr>
+          </tbody>
+        </table>
 
       </div>
     </div>
