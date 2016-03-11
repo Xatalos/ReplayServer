@@ -1,5 +1,54 @@
-$test-color : #333;
+$bg-color : #303030;
+$sidebar-color : $bg-color + #111;
+$sidebar-width: 25%;
 
-.test {
-  color: $test-color;
+$area-margin: 3%;
+
+$replay-thumbnail-bg: $bg-color - #111;
+
+body, html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#background {
+  background-color: $bg-color;
+  color: #FFF - $bg-color;
+  min-height: 100%;
+  width: 100%;
+}
+
+#sidebar {
+  position: fixed;
+  background-color: $sidebar-color;
+  height: 100%;
+  width: $sidebar-width;
+  display: inline-block;
+}
+
+#area {
+  position: relative;
+  left: $sidebar-width;
+  width: 99% - $area-margin * 1.5 - $sidebar-width;
+  margin: $area-margin;
+  display: inline-block;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.replay-thumbnail {
+  background-color: $replay-thumbnail-bg;
+  text-align: center;
+  margin-bottom: $area-margin;
+
+  img.thumbnail {
+    padding-top: 5%;
+    width: 80%;
+    height: auto;
+  }
 }
