@@ -1,8 +1,9 @@
-$bg-color : #303030;
+$bg-color : #303035;
 $sidebar-color : $bg-color + #111;
 $sidebar-width: 25%;
 
-$area-margin: 3%;
+$area-margin: 1%;
+$thumbnail-margin: 3%;
 
 $replay-thumbnail-bg: $bg-color - #111;
 
@@ -31,8 +32,9 @@ body, html {
 #area {
   position: relative;
   left: $sidebar-width;
-  width: 99% - $area-margin * 1.5 - $sidebar-width;
+  width: 99% - $area-margin * 1.5 - 5% - $sidebar-width;
   margin: $area-margin;
+  margin-left: 5%;
   display: inline-block;
 
   p {
@@ -45,10 +47,38 @@ body, html {
   background-color: $replay-thumbnail-bg;
   text-align: center;
   margin-bottom: $area-margin;
+  border-radius: 5%;
+  transition: background-color 0.2s;
+  display: inline-block;
 
   img.thumbnail {
     padding-top: 5%;
     width: 80%;
     height: auto;
+    border-radius: inherit;
   }
+
+  @media (min-width: 960px) {
+    width: 25% - $thumbnail-margin;
+    margin: $thumbnail-margin / 4 - 0.5%;
+  }
+
+  @media (min-width: 500px) and (max-width: 960px) {
+    width: (100%/3) - $thumbnail-margin;
+    margin: $thumbnail-margin / 3 - 0.5%;
+  }
+
+  @media (min-width: 300px) and (max-width: 500px) {
+    width: 50% - $thumbnail-margin;
+    margin: $thumbnail-margin / 2 - 0.5%;
+  }
+
+  @media (max-width: 300px) {
+    width: 100%;
+    margin: 0%;
+  }
+}
+
+.replay-thumbnail:hover {
+  background-color: $replay-thumbnail-bg - #080808;
 }
