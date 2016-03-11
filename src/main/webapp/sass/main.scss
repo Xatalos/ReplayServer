@@ -74,6 +74,7 @@ input:not([type=file]) {
   background-color: $form-color;
   color: $text-color;
   border-color: $form-color + #111;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
 
   :hover {
       color: $text-color - #333;

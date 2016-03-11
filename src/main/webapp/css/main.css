@@ -51,7 +51,8 @@ tbody {
 input:not([type=file]), select:not([type=file]) {
   background-color: #525257;
   color: #cccccc;
-  border-color: #636368; }
+  border-color: #636368;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s; }
   input:not([type=file]) :hover, select:not([type=file]) :hover {
     color: #999999; }
   input:not([type=file]) :focus, select:not([type=file]) :focus {
