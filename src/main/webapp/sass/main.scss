@@ -39,6 +39,7 @@ body, html {
   display: inline-block;
   padding: $area-padding;
   overflow: auto;
+  margin-top: 4vmin;
 
   p {
     margin: 0;
@@ -46,8 +47,27 @@ body, html {
   }
 }
 
+.name, .version, .date, .downloads{
+  width: 10vw;
+}
+
 form.form {
   padding: 5%;
+}
+
+thead {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  margin-left: -$area-padding;
+  padding-left: $area-padding;
+  background-color: $bg-color + #080808;
+}
+
+tbody {
+  padding-top: 125%;
+  overflow: hidden;
+  width: 100%;
 }
 
 input:not([type=file]) {
@@ -72,8 +92,11 @@ th, td {
   border-color: $sidebar-color !important;
   color: $text-color;
   font-weight: 100;
+  overflow: hidden;
 }
 
 thead tr th {
+  border: 0;
+  width: 40vw;
   font-weight: bolder !important;
 }

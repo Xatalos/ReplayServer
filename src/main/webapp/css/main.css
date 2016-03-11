@@ -23,13 +23,30 @@ body, html {
   width: 71%;
   display: inline-block;
   padding: 2%;
-  overflow: auto; }
+  overflow: auto;
+  margin-top: 4vmin; }
   #area p {
     margin: 0;
     padding: 0; }
 
+.name, .version, .date, .downloads {
+  width: 10vw; }
+
 form.form {
   padding: 5%; }
+
+thead {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  margin-left: -2%;
+  padding-left: 2%;
+  background-color: #38383d; }
+
+tbody {
+  padding-top: 125%;
+  overflow: hidden;
+  width: 100%; }
 
 input:not([type=file]), select:not([type=file]) {
   background-color: #525257;
@@ -43,9 +60,12 @@ input:not([type=file]), select:not([type=file]) {
 th, td {
   border-color: #414146 !important;
   color: #cccccc;
-  font-weight: 100; }
+  font-weight: 100;
+  overflow: hidden; }
 
 thead tr th {
+  border: 0;
+  width: 40vw;
   font-weight: bolder !important; }
 
 /*# sourceMappingURL=main.css.map */
