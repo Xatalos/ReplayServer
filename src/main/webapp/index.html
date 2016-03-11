@@ -10,6 +10,12 @@
     <!-- Custom SASS compiled CSS -->
     <link rel="stylesheet" href="css/main.css">
 
+    <!-- jQuery -->
+    <script src="js/jquery.js" type="text/javascript"></script>
+
+    <!-- TypeScript compiled JavaScript -->
+    <script src="js/main.js" type="text/javascript"></script>
+
     <title>Replay Server</title>
 
   </head>
@@ -46,16 +52,16 @@
             <input type="submit" value="Search"></input>
           </div>
         </form>
-        <form id="upload-form" class="form">
+        <form id="upload-form" class="form" method="POST" action="/newreplay" enctype="multipart/form-data">
           <h4>Upload</h4>
           <div class="row">
             <div class="eight columns">
               <label for="name">Name</label>
-              <input type="text" class="u-full-width" placeholder="Replay name" id="name">
+              <input type="text" class="u-full-width" placeholder="Replay name" name="name">
             </div>
             <div class="four columns">
               <label for="version">Version</label>
-              <select class="u-full-width" id="version">
+              <select class="u-full-width" name="version">
                 <option value="0.6.0">0.6.0</option>
                 <option value="0.5.0">0.5.0</option>
               </select>
@@ -78,221 +84,14 @@
           </thead>
           <tbod>
             <tr>
-              <th class="name">Allexit vs TripleSlain</td>
-              <th class="version">0.6.0</th>
-              <th class="date">11-03-16</th>
-              <th class="downloads">1600</th>
-              <th class="download">
+              <td class="name">Allexit vs TripleSlain</td>
+              <td class="version">0.6.0</td>
+              <td class="date">11-03-16</td>
+              <td class="downloads">1600</td>
+              <td class="download">
               <input type="submit" value="Download"></input>
-              </th>
+              </td>
             </tr>
-              <tr>
-                <th class="name">Allexit vs TripleSlain</td>
-                <th class="version">0.6.0</th>
-                <th class="date">11-03-16</th>
-                <th class="downloads">1600</th>
-                <th class="download">
-                <input type="submit" value="Download"></input>
-                </th>
-              </tr>
-                <tr>
-                  <th class="name">Allexit vs TripleSlain</td>
-                  <th class="version">0.6.0</th>
-                  <th class="date">11-03-16</th>
-                  <th class="downloads">1600</th>
-                  <th class="download">
-                  <input type="submit" value="Download"></input>
-                  </th>
-                </tr>
-                  <tr>
-                    <th class="name">Allexit vs TripleSlain</td>
-                    <th class="version">0.6.0</th>
-                    <th class="date">11-03-16</th>
-                    <th class="downloads">1600</th>
-                    <th class="download">
-                    <input type="submit" value="Download"></input>
-                    </th>
-                  </tr>
-                    <tr>
-                      <th class="name">Allexit vs TripleSlain</td>
-                      <th class="version">0.6.0</th>
-                      <th class="date">11-03-16</th>
-                      <th class="downloads">1600</th>
-                      <th class="download">
-                      <input type="submit" value="Download"></input>
-                      </th>
-                    </tr>
-                      <tr>
-                        <th class="name">Allexit vs TripleSlain</td>
-                        <th class="version">0.6.0</th>
-                        <th class="date">11-03-16</th>
-                        <th class="downloads">1600</th>
-                        <th class="download">
-                        <input type="submit" value="Download"></input>
-                        </th>
-                      </tr>
-                        <tr>
-                          <th class="name">Allexit vs TripleSlain</td>
-                          <th class="version">0.6.0</th>
-                          <th class="date">11-03-16</th>
-                          <th class="downloads">1600</th>
-                          <th class="download">
-                          <input type="submit" value="Download"></input>
-                          </th>
-                        </tr>
-                          <tr>
-                            <th class="name">Allexit vs TripleSlain</td>
-                            <th class="version">0.6.0</th>
-                            <th class="date">11-03-16</th>
-                            <th class="downloads">1600</th>
-                            <th class="download">
-                            <input type="submit" value="Download"></input>
-                            </th>
-                          </tr>
-                            <tr>
-                              <th class="name">Allexit vs TripleSlain</td>
-                              <th class="version">0.6.0</th>
-                              <th class="date">11-03-16</th>
-                              <th class="downloads">1600</th>
-                              <th class="download">
-                              <input type="submit" value="Download"></input>
-                              </th>
-                            </tr>
-                              <tr>
-                                <th class="name">Allexit vs TripleSlain</td>
-                                <th class="version">0.6.0</th>
-                                <th class="date">11-03-16</th>
-                                <th class="downloads">1600</th>
-                                <th class="download">
-                                <input type="submit" value="Download"></input>
-                                </th>
-                              </tr>
-                                <tr>
-                                  <th class="name">Allexit vs TripleSlain</td>
-                                  <th class="version">0.6.0</th>
-                                  <th class="date">11-03-16</th>
-                                  <th class="downloads">1600</th>
-                                  <th class="download">
-                                  <input type="submit" value="Download"></input>
-                                  </th>
-                                </tr>
-                                  <tr>
-                                    <th class="name">Allexit vs TripleSlain</td>
-                                    <th class="version">0.6.0</th>
-                                    <th class="date">11-03-16</th>
-                                    <th class="downloads">1600</th>
-                                    <th class="download">
-                                    <input type="submit" value="Download"></input>
-                                    </th>
-                                  </tr>
-                                    <tr>
-                                      <th class="name">Allexit vs TripleSlain</td>
-                                      <th class="version">0.6.0</th>
-                                      <th class="date">11-03-16</th>
-                                      <th class="downloads">1600</th>
-                                      <th class="download">
-                                      <input type="submit" value="Download"></input>
-                                      </th>
-                                    </tr>
-                                      <tr>
-                                        <th class="name">Allexit vs TripleSlain</td>
-                                        <th class="version">0.6.0</th>
-                                        <th class="date">11-03-16</th>
-                                        <th class="downloads">1600</th>
-                                        <th class="download">
-                                        <input type="submit" value="Download"></input>
-                                        </th>
-                                      </tr>
-                                        <tr>
-                                          <th class="name">Allexit vs TripleSlain</td>
-                                          <th class="version">0.6.0</th>
-                                          <th class="date">11-03-16</th>
-                                          <th class="downloads">1600</th>
-                                          <th class="download">
-                                          <input type="submit" value="Download"></input>
-                                          </th>
-                                        </tr>
-                                          <tr>
-                                            <th class="name">Allexit vs TripleSlain</td>
-                                            <th class="version">0.6.0</th>
-                                            <th class="date">11-03-16</th>
-                                            <th class="downloads">1600</th>
-                                            <th class="download">
-                                            <input type="submit" value="Download"></input>
-                                            </th>
-                                          </tr>
-                                            <tr>
-                                              <th class="name">Allexit vs TripleSlain</td>
-                                              <th class="version">0.6.0</th>
-                                              <th class="date">11-03-16</th>
-                                              <th class="downloads">1600</th>
-                                              <th class="download">
-                                              <input type="submit" value="Download"></input>
-                                              </th>
-                                            </tr>
-                                              <tr>
-                                                <th class="name">Allexit vs TripleSlain</td>
-                                                <th class="version">0.6.0</th>
-                                                <th class="date">11-03-16</th>
-                                                <th class="downloads">1600</th>
-                                                <th class="download">
-                                                <input type="submit" value="Download"></input>
-                                                </th>
-                                              </tr>
-                                                <tr>
-                                                  <th class="name">Allexit vs TripleSlain</td>
-                                                  <th class="version">0.6.0</th>
-                                                  <th class="date">11-03-16</th>
-                                                  <th class="downloads">1600</th>
-                                                  <th class="download">
-                                                  <input type="submit" value="Download"></input>
-                                                  </th>
-                                                </tr>
-                                                  <tr>
-                                                    <th class="name">Allexit vs TripleSlain</td>
-                                                    <th class="version">0.6.0</th>
-                                                    <th class="date">11-03-16</th>
-                                                    <th class="downloads">1600</th>
-                                                    <th class="download">
-                                                    <input type="submit" value="Download"></input>
-                                                    </th>
-                                                  </tr>
-                                                    <tr>
-                                                      <th class="name">Allexit vs TripleSlain</td>
-                                                      <th class="version">0.6.0</th>
-                                                      <th class="date">11-03-16</th>
-                                                      <th class="downloads">1600</th>
-                                                      <th class="download">
-                                                      <input type="submit" value="Download"></input>
-                                                      </th>
-                                                    </tr>
-                                                      <tr>
-                                                        <th class="name">Allexit vs TripleSlain</td>
-                                                        <th class="version">0.6.0</th>
-                                                        <th class="date">11-03-16</th>
-                                                        <th class="downloads">1600</th>
-                                                        <th class="download">
-                                                        <input type="submit" value="Download"></input>
-                                                        </th>
-                                                      </tr>
-                                                        <tr>
-                                                          <th class="name">Allexit vs TripleSlain</td>
-                                                          <th class="version">0.6.0</th>
-                                                          <th class="date">11-03-16</th>
-                                                          <th class="downloads">1600</th>
-                                                          <th class="download">
-                                                          <input type="submit" value="Download"></input>
-                                                          </th>
-                                                        </tr>
-                                                          <tr>
-                                                            <th class="name">Allexit vs TripleSlain</td>
-                                                            <th class="version">0.6.0</th>
-                                                            <th class="date">11-03-16</th>
-                                                            <th class="downloads">1600</th>
-                                                            <th class="download">
-                                                            <input type="submit" value="Download"></input>
-                                                            </th>
-                                                          </tr>
           </tbody>
         </table>
 
