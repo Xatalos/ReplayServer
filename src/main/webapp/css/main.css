@@ -2,7 +2,8 @@ body, html {
   height: 100%;
   width: 100%;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  overflow: auto; }
 
 #background {
   background-color: #303035;
@@ -29,8 +30,11 @@ body, html {
     margin: 0;
     padding: 0; }
 
-.name, .version, .date, .downloads {
-  width: 10vw; }
+.name {
+  width: 25vw; }
+
+.version, .downloads, .date {
+  width: 5vw; }
 
 form.form {
   padding: 5%; }
@@ -60,6 +64,15 @@ tbody {
 .interactive-menuelement:focus, input:focus:not([type=file]), button:focus, select:focus {
   color: #bbbbbb;
   border-color: #85858a; }
+
+.interactive-menuelement:disabled, input:disabled:not([type=file]), button:disabled, select:disabled {
+  background-color: #414146;
+  color: #aaaaaa; }
+
+label.sidenote {
+  font-weight: 100;
+  font-style: italic;
+  color: #bbbbbb; }
 
 th, td {
   border-color: #414146 !important;

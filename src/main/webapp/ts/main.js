@@ -1,4 +1,3 @@
-/// <reference path="jquery.d.ts" />
 var replay_area;
 var can_request_JSON = true;
 $(function () {

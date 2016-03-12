@@ -15,6 +15,7 @@ body, html {
   width: 100%;
   margin: 0;
   padding: 0;
+  overflow: auto;
 }
 
 #background {
@@ -47,9 +48,8 @@ body, html {
   }
 }
 
-.name, .version, .date, .downloads{
-  width: 10vw;
-}
+.name { width: 25vw; }
+.version, .downloads, .date { width: 5vw; }
 
 form.form {
   padding: 5%;
@@ -87,6 +87,11 @@ tbody {
     border-color: $form-color + #333;
 }
 
+.interactive-menuelement:disabled {
+  background-color: $form-color - #111;
+  color: $text-color -#222;
+}
+
 input:not([type=file]) {
   @extend .interactive-menuelement;
 }
@@ -97,6 +102,12 @@ button {
 
 select {
   @extend .interactive-menuelement;
+}
+
+label.sidenote {
+  font-weight: 100;
+  font-style: italic;
+  color: $text-color - #111;
 }
 
 th, td {

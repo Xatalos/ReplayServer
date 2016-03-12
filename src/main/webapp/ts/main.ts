@@ -51,6 +51,7 @@ function create_replay(replay: Replay) {
   downloads_td.addClass("downloads")
   downloads_td.text(replay.downloads)
   var download_td = $(document.createElement("td"));
+  download_td.addClass("download")
   var download_button = $(document.createElement("input"));
   download_button.attr("type", "submit");
   download_button.attr("value", "Download");
