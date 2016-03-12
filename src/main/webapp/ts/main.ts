@@ -1,6 +1,7 @@
 /// <reference path="jquery.d.ts" />
 
 var replay_area
+var can_request_JSON = true
 
 interface Replay {
   name: string;
@@ -11,12 +12,17 @@ interface Replay {
 
 $(function() {
   replay_area = $("#replay-area")
+  can_request_JSON = false
   $.getJSON(window.document.URL + "/replays", create_replays)
 })
 
 function search() {
+  if (!can_request_JSON) {
+    return;
+  }
   var contains = $("#search-contains").val()
   var version = $("#search-version").val()
+  can_request_JSON = false
   $.getJSON(window.document.URL + "searchreplays?name=" + contains + "&version=" + version, create_replays)
   return false
 }
@@ -27,6 +33,7 @@ function create_replays(data) {
   for (var i in data["replays"]) {
     create_replay(data.replays[i]);
   }
+  can_request_JSON = true
 }
 
 function create_replay(replay: Replay) {
