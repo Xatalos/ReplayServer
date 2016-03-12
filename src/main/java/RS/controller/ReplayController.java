@@ -4,7 +4,10 @@ import RS.domain.Player;
 import RS.domain.Replay;
 import RS.repository.PlayerRepository;
 import RS.repository.ReplayRepository;
+import arkhados.replay.ReplayHeader;
+import arkhados.replay.ReplayMetadataSerializer;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -59,14 +62,9 @@ public class ReplayController {
 
     @Transactional
     @RequestMapping(value = "/searchreplaystl", method = RequestMethod.GET)
-    public String searchReplays(Model model, @RequestParam String name, @RequestParam String version) {
+    public String searchReplays(Model model, @RequestParam String name) {
         Pageable pageable = new PageRequest(0, 30, Sort.Direction.DESC, "gameDate");
-        Page<Replay> replayPage;
-        if (version.equals("any")) {
-            replayPage = replayRepository.findByNameContaining(pageable, name);
-        } else {
-            replayPage = replayRepository.findByNameContainingAndVersion(pageable, name, version);
-        }
+        Page<Replay> replayPage = replayRepository.findByNameContaining(pageable, name);
         model.addAttribute("replays", replayPage.getContent());
         return "replays";
     }
@@ -81,17 +79,32 @@ public class ReplayController {
             redirectAttributes.addFlashAttribute("notification", "You left some required text fields empty!");
             return "redirect:/";
         }
-
-        replay.setGameDate(new Date());
-
+        
+        ReplayMetadataSerializer ser = new ReplayMetadataSerializer();
+        ReplayHeader header = ser.readObject(ByteBuffer.wrap(file.getBytes()), ReplayHeader.class);
+        
         replay.setContent("download_url");
         
-        replay.setGameMode("Deathmatch");
+        replay.setName(file.getOriginalFilename());
+
+        replay.setGameDate(header.getDate());
         
-        replay.setArena("Pillar Arena");
+        replay.setGameMode(header.getGameMode());
+        
+        replay.setVersion(header.getVersion());
+        
+        replay.setArena(header.getArena());
 
         List<Player> players = new ArrayList<Player>();
+        for (String playerName : header.getPlayers().values()) {
+            System.out.println(playerName);
+            Player newPlayer = new Player();
+            newPlayer.setName(playerName);
+            newPlayer.setReplay(replay);
+            players.add(newPlayer);
+        }
         replay.setPlayers(players);
+        System.out.println(players);
 
         replay.setDownloads(new Random().nextInt(10)); // temporary solution
 

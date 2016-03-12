@@ -2,9 +2,11 @@ package RS.domain;
 
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,21 +18,20 @@ public class Replay extends AbstractPersistable<Long> {
 
     private String content;
 
-    @NotBlank
     private String name;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date gameDate;
-    
+
     private String version;
-    
+
     private String gameMode;
-    
+
     private String arena;
-    
+
     @OneToMany(mappedBy = "replay", fetch = FetchType.EAGER)
     private List<Player> players;
-    
+
     @Column(length = 2147483647, name = "downloads")
     private int downloads;
 

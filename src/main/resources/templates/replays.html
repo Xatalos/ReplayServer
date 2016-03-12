@@ -14,11 +14,6 @@
         <h4 class="red" th:text="${notification}"></h4>
 
         <form method="POST" action="/newreplay" enctype="multipart/form-data">
-            <input type="text" name="name" placeholder="Replay name"/>
-            <select name="version">
-                <option value="0.6.0">0.6.0</option>
-                <option value="0.5.0">0.5.0</option>
-            </select>
             <input type="file" name="replay" id="replay"/>
             <input type="submit" value="Add!"/>
         </form>
@@ -35,11 +30,6 @@
 
         <form method="GET" action="/searchreplaystl">
             <input type="text" name="name" placeholder="Replay name contains..."/>
-            <select name="version">
-                <option value="any">Any Version</option>
-                <option value="0.6.0">0.6.0</option>
-                <option value="0.5.0">0.5.0</option>
-            </select>
             <input type="submit" value="Search replays"/>
         </form>
 

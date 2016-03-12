@@ -44,14 +44,9 @@ public class ReplayRestController {
     @CrossOrigin
     @Transactional
     @RequestMapping(value = "/searchreplays", method = RequestMethod.GET)
-    public SearchResult searchReplays(@RequestParam String name, @RequestParam String version) {
+    public SearchResult searchReplays(@RequestParam String name) {
         Pageable pageable = new PageRequest(0, 30, Sort.Direction.DESC, "gameDate");
-        Page<Replay> replayPage;
-        if (version.equals("any")) {
-            replayPage = replayRepository.findByNameContaining(pageable, name);
-        } else {
-            replayPage = replayRepository.findByNameContainingAndVersion(pageable, name, version);
-        }
+        Page<Replay> replayPage = replayRepository.findByNameContaining(pageable, name);
         return new SearchResult(replayPage.getContent());
     }
 }
