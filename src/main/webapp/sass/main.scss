@@ -70,23 +70,33 @@ tbody {
   width: 100%;
 }
 
+.interactive-menuelement {
+    background-color: $form-color;
+    color: $text-color;
+    border-color: $form-color + #111;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+
+}
+
+.interactive-menuelement:hover {
+    color: $text-color + #111;
+}
+
+.interactive-menuelement:focus {
+    color: $text-color - #111;
+    border-color: $form-color + #333;
+}
+
 input:not([type=file]) {
-  background-color: $form-color;
-  color: $text-color;
-  border-color: $form-color + #111;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  @extend .interactive-menuelement;
+}
 
-  :hover {
-      color: $text-color - #333;
-  }
-
-  :focus {
-    color: $text-color - #444;
-  }
+button {
+  @extend .interactive-menuelement;
 }
 
 select {
-  @extend input
+  @extend .interactive-menuelement;
 }
 
 th, td {

@@ -1,24 +1,19 @@
 var replay_area;
-var Replay = (function () {
-    function Replay(name, version, downloads, download_url, date_millis) {
-        this.name = name;
-        this.version = version;
-        this.downloads = downloads;
-        this.download_url = download_url;
-        this.date = new Date(date_millis);
-    }
-    return Replay;
-}());
 $(function () {
     replay_area = $("#replay-area");
     $.getJSON(window.document.URL + "/replays", create_replays);
 });
+function search() {
+    var contains = $("#search-contains").val();
+    var version = $("#search-version").val();
+    $.getJSON(window.document.URL + "searchreplays?name=" + contains + "&version=" + version, create_replays);
+    return false;
+}
 function create_replays(data) {
     replay_area.empty();
+    $("#search").click(search);
     for (var i in data["replays"]) {
-        var replay_data = data.replays[i];
-        var replay = new Replay(replay_data["name"], replay_data["version"], replay_data["downloads"], "", replay_data.gameDate);
-        create_replay(replay);
+        create_replay(data.replays[i]);
     }
 }
 function create_replay(replay) {
@@ -31,7 +26,7 @@ function create_replay(replay) {
     version_td.text(replay.version);
     var date_td = $(document.createElement("td"));
     date_td.addClass("date");
-    date_td.text(make_date_sensible(replay.date));
+    date_td.text(make_date_sensible(new Date(replay.gameDate)));
     var downloads_td = $(document.createElement("td"));
     downloads_td.addClass("downloads");
     downloads_td.text(replay.downloads);

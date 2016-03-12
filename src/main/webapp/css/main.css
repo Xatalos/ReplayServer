@@ -48,15 +48,18 @@ tbody {
   overflow: hidden;
   width: 100%; }
 
-input:not([type=file]), select:not([type=file]) {
+.interactive-menuelement, input:not([type=file]), button, select {
   background-color: #525257;
   color: #cccccc;
   border-color: #636368;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s; }
-  input:not([type=file]) :hover, select:not([type=file]) :hover {
-    color: #999999; }
-  input:not([type=file]) :focus, select:not([type=file]) :focus {
-    color: #888888; }
+
+.interactive-menuelement:hover, input:hover:not([type=file]), button:hover, select:hover {
+  color: #dddddd; }
+
+.interactive-menuelement:focus, input:focus:not([type=file]), button:focus, select:focus {
+  color: #bbbbbb;
+  border-color: #85858a; }
 
 th, td {
   border-color: #414146 !important;
