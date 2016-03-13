@@ -59,15 +59,6 @@ public class ReplayController {
         return "replays";
     }
 
-    @Transactional
-    @RequestMapping(value = "/searchreplaystl", method = RequestMethod.GET)
-    public String searchReplays(Model model, @RequestParam String name) {
-        Pageable pageable = new PageRequest(0, 30, Sort.Direction.DESC, "gameDate");
-        Page<Replay> replayPage = replayRepository.findByNameContaining(pageable, name);
-        model.addAttribute("replays", replayPage.getContent());
-        return "replays";
-    }
-
     @RequestMapping(value = "/newreplay", method = RequestMethod.POST)
     public String addReplay(@RequestParam("replay") MultipartFile file, @Valid @ModelAttribute Replay replay,
             BindingResult result, RedirectAttributes redirectAttributes) throws IOException {
@@ -83,8 +74,6 @@ public class ReplayController {
         ReplayHeader header = ser.readObject(ByteBuffer.wrap(file.getBytes()), ReplayHeader.class);
         
         replay.setContent("download_url");
-        
-        replay.setName(file.getOriginalFilename());
 
         replay.setGameDate(header.getDate());
         

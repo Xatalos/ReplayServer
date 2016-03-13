@@ -28,17 +28,13 @@
             <input type="submit" value="Show Replays"/>
         </form>
 
-        <form method="GET" action="/searchreplaystl">
-            <input type="text" name="name" placeholder="Replay name contains..."/>
-            <input type="submit" value="Search replays"/>
-        </form>
-
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
                     <th>Date</th>
                     <th>Version</th>
+                    <th>Arena</th>
+                    <th>Game Mode</th>
                     <th>Players</th>
                     <th>Downloads</th>
                     <th>Download</th>
@@ -50,9 +46,10 @@
                     <td>No replays</td>
                 </tr>
                 <tr th:each="replay : ${replays}">
-                    <td><span th:text="${replay.name}" /></td>
                     <td><span th:text="${replay.gameDate}" /></td>
                     <td><span th:text="${replay.version}" /></td>
+                    <td><span th:text="${replay.arena}" /></td>
+                    <td><span th:text="${replay.gameMode}" /></td>
                     <td>
                         <span th:each="player : ${replay.players}">
                             <span th:text="${player.name}"></span><span> </span>

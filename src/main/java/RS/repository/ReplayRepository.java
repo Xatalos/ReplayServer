@@ -9,9 +9,4 @@ import org.springframework.data.repository.query.Param;
 public interface ReplayRepository extends JpaRepository<Replay, Long> {
 
     Page<Replay> findAll(Pageable pageable);
-
-    Page<Replay> findByNameContainingAndVersion(Pageable pageable, @Param("name") String name,
-            @Param("version") String version);
-
-    Page<Replay> findByNameContaining(Pageable pageable, @Param("name") String name);
 }

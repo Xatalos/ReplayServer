@@ -18,8 +18,6 @@ public class Replay extends AbstractPersistable<Long> {
 
     private String content;
 
-    private String name;
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date gameDate;
 
@@ -39,10 +37,6 @@ public class Replay extends AbstractPersistable<Long> {
         return content;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public Date getGameDate() {
         return gameDate;
     }
@@ -57,10 +51,6 @@ public class Replay extends AbstractPersistable<Long> {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setGameDate(Date gameDate) {
