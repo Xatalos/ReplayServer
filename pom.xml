@@ -17,6 +17,14 @@
         <version>1.3.0.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+    
+    <repositories>
+        <repository>
+            <id>ReplayServer.local</id>
+            <name>ReplayServer</name>
+            <url>file:${project.basedir}/repo</url>
+        </repository>
+    </repositories>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -67,25 +75,19 @@
             <version>1.3.0.RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>arkhados-replayreader</groupId>
-            <artifactId>arkhados-replayreader</artifactId>
+            <groupId>arkhados</groupId>
+            <artifactId>replaymetadatareader</artifactId>
             <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/resources/ReplayMetadataReader.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>jme-networking</groupId>
+            <groupId>arkhados</groupId>
             <artifactId>jme-networking</artifactId>
             <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/resources/jme3-networking.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>jme-core</groupId>
-            <artifactId>jme-networking</artifactId>
+            <groupId>arkhados</groupId>
+            <artifactId>jme-core</artifactId>
             <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/resources/jme3-core.jar</systemPath>
         </dependency>
     </dependencies>
 	

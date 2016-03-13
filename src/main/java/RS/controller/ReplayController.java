@@ -9,7 +9,6 @@ import arkhados.replay.ReplayMetadataSerializer;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import javax.transaction.Transactional;
@@ -94,7 +93,10 @@ public class ReplayController {
         replay.setVersion(header.getVersion());
         
         replay.setArena(header.getArena());
-
+        
+        // TODO: save players first, then add to replay, then save replay?
+        // what about making sure that everything is saved or nothing is saved
+        // (no separate players and/or replays)?
         List<Player> players = new ArrayList<Player>();
         for (String playerName : header.getPlayers().values()) {
             System.out.println(playerName);
