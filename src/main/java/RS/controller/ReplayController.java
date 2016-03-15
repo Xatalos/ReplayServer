@@ -82,24 +82,17 @@ public class ReplayController {
         replay.setVersion(header.getVersion());
         
         replay.setArena(header.getArena());
-        
-        // TODO: save players first, then add to replay, then save replay?
-        // what about making sure that everything is saved or nothing is saved
-        // (no separate players and/or replays)?
-        List<Player> players = new ArrayList<Player>();
-        for (String playerName : header.getPlayers().values()) {
-            System.out.println(playerName);
-            Player newPlayer = new Player();
-            newPlayer.setName(playerName);
-            newPlayer.setReplay(replay);
-            players.add(newPlayer);
-        }
-        replay.setPlayers(players);
-        System.out.println(players);
 
         replay.setDownloads(new Random().nextInt(10)); // temporary solution
 
         replayRepository.save(replay);
+
+        for (String playerName : header.getPlayers().values()) {
+            Player player = new Player();
+            player.setName(playerName);
+            player.setReplay(replay);
+            playerRepository.save(player);
+        }
 
         return "redirect:/";
     }
