@@ -13,7 +13,7 @@
 
         <h4 class="red" th:text="${notification}"></h4>
 
-        <form method="POST" action="/newreplay" enctype="multipart/form-data">
+        <form method="POST" action="/newreplaytl" enctype="multipart/form-data">
             <input type="file" name="replay" id="replay"/>
             <input type="submit" value="Add!"/>
         </form>
@@ -56,7 +56,7 @@
                     </td>
                     <td><span th:text="${replay.downloads}" /></td>
                     <td>
-                        <form th:method="POST" th:action="@{/{id}/download(id=${replay.id})}">
+                        <form th:method="POST" th:action="@{/{id}/downloadtl(id=${replay.id})}">
                             <input type="submit" value="Download"/>
                         </form>
                     </td>

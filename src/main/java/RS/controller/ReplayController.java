@@ -56,7 +56,7 @@ public class ReplayController {
         return "replays";
     }
 
-    @RequestMapping(value = "/newreplay", method = RequestMethod.POST)
+    @RequestMapping(value = "/newreplaytl", method = RequestMethod.POST)
     public String addReplay(@RequestParam("replay") MultipartFile file, @Valid @ModelAttribute Replay replay,
             BindingResult result, RedirectAttributes redirectAttributes) throws IOException {
         if (!file.getOriginalFilename().contains(".rep")) {
@@ -94,7 +94,7 @@ public class ReplayController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/{id}/download", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/downloadtl", method = RequestMethod.POST)
     public String downloadReplay(@PathVariable Long id) {
         Replay replay = replayRepository.findOne(id);
         replay.setDownloads(replay.getDownloads() + 1);
