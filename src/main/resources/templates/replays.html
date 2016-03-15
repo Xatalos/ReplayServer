@@ -38,7 +38,6 @@
                     <th>Players</th>
                     <th>Downloads</th>
                     <th>Download</th>
-                    <th>Add Random Player</th>
                 </tr>
             </thead>
             <tbody>
@@ -57,13 +56,8 @@
                     </td>
                     <td><span th:text="${replay.downloads}" /></td>
                     <td>
-                        <form th:method="GET" th:action="@{/{id}/download(id=${replay.id})}">
+                        <form th:method="POST" th:action="@{/{id}/download(id=${replay.id})}">
                             <input type="submit" value="Download"/>
-                        </form>
-                    </td>
-                    <td>
-                        <form th:method="POST" th:action="@{/{id}/player(id=${replay.id})}">
-                            <input type="submit" value="Add Random Player"/>
                         </form>
                     </td>
                 </tr>

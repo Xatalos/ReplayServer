@@ -8,9 +8,6 @@ import arkhados.replay.ReplayHeader;
 import arkhados.replay.ReplayMetadataSerializer;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,21 +66,21 @@ public class ReplayController {
             redirectAttributes.addFlashAttribute("notification", "You left some required text fields empty!");
             return "redirect:/";
         }
-        
+
         ReplayMetadataSerializer ser = new ReplayMetadataSerializer();
         ReplayHeader header = ser.readObject(ByteBuffer.wrap(file.getBytes()), ReplayHeader.class);
-        
+
         replay.setContent("download_url");
 
         replay.setGameDate(header.getDate());
-        
+
         replay.setGameMode(header.getGameMode());
-        
+
         replay.setVersion(header.getVersion());
-        
+
         replay.setArena(header.getArena());
 
-        replay.setDownloads(new Random().nextInt(10)); // temporary solution
+        replay.setDownloads(0);
 
         replayRepository.save(replay);
 
@@ -97,38 +94,11 @@ public class ReplayController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/{id}/download", method = RequestMethod.GET)
-    public String getFile(@PathVariable Long id) {
+    @RequestMapping(value = "/{id}/download", method = RequestMethod.POST)
+    public String downloadReplay(@PathVariable Long id) {
         Replay replay = replayRepository.findOne(id);
-        return "redirect:/"; // downloading inactive for now - check older commits etc. for download related code
-    }
-
-    @RequestMapping(value = "/{id}/player", method = RequestMethod.POST)
-    public String addRandomPlayer(@PathVariable Long id) {
-        Replay replay = replayRepository.findOne(id);
-
-        Player player = new Player();
-        ArrayList<String> potentialNames = new ArrayList<String>();
-        potentialNames.add("dynarii");
-        potentialNames.add("rngvillain");
-        potentialNames.add("triplesauced");
-        player.setName(potentialNames.get(new Random().nextInt(3)));
-        player.setReplay(replay);
-
-        playerRepository.save(player);
-
-        return "redirect:/";
-    }
-
-    // TODO: changing downloads value still causes data exception: string data, right truncation?
-    @RequestMapping(value = "/{id}/adddownload", method = RequestMethod.POST)
-    public String addDownload(@PathVariable Long id) {
-        Replay replay = replayRepository.findOne(id);
-
         replay.setDownloads(replay.getDownloads() + 1);
-
         replayRepository.save(replay);
-
         return "redirect:/";
     }
 }
