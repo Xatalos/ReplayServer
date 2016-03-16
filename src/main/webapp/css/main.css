@@ -30,11 +30,8 @@ body, html {
     margin: 0;
     padding: 0; }
 
-.name {
-  width: 25vw; }
-
-.version, .downloads, .date {
-  width: 5vw; }
+.version, .arena, .downloads, .date {
+  width: 8vw; }
 
 form.form {
   padding: 5%; }
@@ -68,6 +65,10 @@ tbody {
 .interactive-menuelement:disabled, input:disabled:not([type=file]), button:disabled, select:disabled {
   background-color: #414146;
   color: #aaaaaa; }
+
+.interactive-menuelement:hover:disabled, input:hover:disabled:not([type=file]), button:hover:disabled, select:hover:disabled {
+  color: #aaaaaa;
+  border-color: #636368; }
 
 label.sidenote {
   font-weight: 100;

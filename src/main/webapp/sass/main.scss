@@ -48,8 +48,7 @@ body, html {
   }
 }
 
-.name { width: 25vw; }
-.version, .downloads, .date { width: 5vw; }
+.version, .arena, .downloads, .date { width: 8vw; }
 
 form.form {
   padding: 5%;
@@ -91,6 +90,12 @@ tbody {
   background-color: $form-color - #111;
   color: $text-color -#222;
 }
+
+.interactive-menuelement:hover:disabled {
+  color: $text-color -#222;
+  border-color: $form-color + #111;
+}
+
 
 input:not([type=file]) {
   @extend .interactive-menuelement;

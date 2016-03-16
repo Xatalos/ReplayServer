@@ -4,7 +4,7 @@ var can_request_JSON = true;
 $(function () {
     replay_area = $("#replay-area");
     can_request_JSON = false;
-    $.getJSON(window.document.URL + "/replays", create_replays);
+    $.getJSON("/replays", create_replays);
 });
 function search() {
     if (!can_request_JSON) {
@@ -12,8 +12,10 @@ function search() {
     }
     var contains = $("#search-contains").val();
     var version = $("#search-version").val();
-    can_request_JSON = false;
-    $.getJSON(window.document.URL + "searchreplays?name=" + contains + "&version=" + version, create_replays);
+    //can_request_JSON = false
+    // REST API does not currently support seraching or filtering. :(
+    console.log("I would serach for replays with version " + version + " but REST API got a little dumber :(");
+    //$.getJSON("/searchreplays?name=" + contains + "&version=" + version, create_replays)
     return false;
 }
 function create_replays(data) {
@@ -26,12 +28,12 @@ function create_replays(data) {
 }
 function create_replay(replay) {
     var tr = $(document.createElement("tr"));
-    var name_td = $(document.createElement("td"));
-    name_td.addClass("name");
-    name_td.text(replay.name);
     var version_td = $(document.createElement("td"));
     version_td.addClass("version");
     version_td.text(replay.version);
+    var arena_td = $(document.createElement("td"));
+    arena_td.addClass("arena");
+    arena_td.text(replay.arena);
     var date_td = $(document.createElement("td"));
     date_td.addClass("date");
     date_td.text(make_date_sensible(new Date(replay.gameDate)));
@@ -44,8 +46,8 @@ function create_replay(replay) {
     download_button.attr("type", "submit");
     download_button.attr("value", "Download");
     download_button.appendTo(download_td);
-    tr.append(name_td);
     tr.append(version_td);
+    tr.append(arena_td);
     tr.append(date_td);
     tr.append(downloads_td);
     tr.append(download_td);

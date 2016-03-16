@@ -24,16 +24,10 @@
       <div id="sidebar">
         <form id="search-form" class="form">
           <h4>Search</h4>
-          <label for="contains">Filters</label>
-          <input type="text" class="u-full-width" placeholder="Replay name contains.." id="search-contains">
-          <label>
-            <input type="checkbox" checked="chekced" disabled></input>
-            <span>Case sensitive</span>
-          </label>
           <div class="row">
-            <div class="six columns">
+            <div class="four columns">
               <label for="version">Version</label>
-              <select class="u-full-width" id="search-version">
+              <select class="u-full-width" id="search-version" disabled>
                 <option value="any">Any</option>
                 <option value="0.6.0">0.6.0</option>
                 <option value="0.5.0">0.5.0</option>
@@ -44,7 +38,7 @@
                 <option value="or-newer">Or newer</option>
               </select>
             </div>
-            <div class="six columns">
+            <div class="four columns">
               <label>Downloads</label>
               <input class="u-full-width" type="number" placeholder="1600" id="search-downloads" disabled></input>
               <select class="u-full-width" id="search-downloads-cond" disabled>
@@ -53,25 +47,20 @@
                 <option value="or-less">Or less</option>
               </select>
             </div>
-            <label class="sidenote">"Case senxitive", downloads and version filtering (other than exactly) not yet supported.</label>
-            <input type="submit" value="Search" id="search"></input>
+            <div class="four columns">
+              <label>Arena</label>
+              <select class="u-full-width" id="search-downloads-cond" disabled>
+                <option value="exactly">Pillar Arena</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <label class="sidenote">Search disabled momentarily as of latest REST API update.</label>
+            <input type="submit" value="Search" id="search" disabled></input>
           </div>
         </form>
         <form id="upload-form" class="form" method="POST" action="/newreplay" enctype="multipart/form-data">
           <h4>Upload</h4>
-          <div class="row">
-            <div class="eight columns">
-              <label for="name">Name</label>
-              <input type="text" class="u-full-width" placeholder="Replay name" name="name">
-            </div>
-            <div class="four columns">
-              <label for="version">Version</label>
-              <select class="u-full-width" name="version">
-                <option value="0.6.0">0.6.0</option>
-                <option value="0.5.0">0.5.0</option>
-              </select>
-            </div>
-          </div>
           <input class="u-full-width" type="file" name="replay" id="replay" class="button"/>
           <input type="submit" value="Upload"></input>
         </form>
@@ -80,8 +69,8 @@
         <table class="u-full-width">
           <thead>
             <tr>
-              <th class="name">Name</th>
               <th class="version">Version</th>
+              <th class="arena">Arena</th>
               <th class="date">Date</th>
               <th class="downloads">Downloads</th>
               <th class="download">Download</th>
