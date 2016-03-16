@@ -13,12 +13,7 @@
 
         <h4 class="red" th:text="${notification}"></h4>
 
-        <form method="POST" action="/newreplay" enctype="multipart/form-data">
-            <input type="text" name="name" placeholder="Replay name"/>
-            <select name="version">
-                <option value="0.6.0">0.6.0</option>
-                <option value="0.5.0">0.5.0</option>
-            </select>
+        <form method="POST" action="/newreplaytl" enctype="multipart/form-data">
             <input type="file" name="replay" id="replay"/>
             <input type="submit" value="Add!"/>
         </form>
@@ -33,26 +28,16 @@
             <input type="submit" value="Show Replays"/>
         </form>
 
-        <form method="GET" action="/searchreplaystl">
-            <input type="text" name="name" placeholder="Replay name contains..."/>
-            <select name="version">
-                <option value="any">Any Version</option>
-                <option value="0.6.0">0.6.0</option>
-                <option value="0.5.0">0.5.0</option>
-            </select>
-            <input type="submit" value="Search replays"/>
-        </form>
-
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
                     <th>Date</th>
                     <th>Version</th>
+                    <th>Arena</th>
+                    <th>Game Mode</th>
                     <th>Players</th>
                     <th>Downloads</th>
                     <th>Download</th>
-                    <th>Add Random Player</th>
                 </tr>
             </thead>
             <tbody>
@@ -60,9 +45,10 @@
                     <td>No replays</td>
                 </tr>
                 <tr th:each="replay : ${replays}">
-                    <td><span th:text="${replay.name}" /></td>
                     <td><span th:text="${replay.gameDate}" /></td>
                     <td><span th:text="${replay.version}" /></td>
+                    <td><span th:text="${replay.arena}" /></td>
+                    <td><span th:text="${replay.gameMode}" /></td>
                     <td>
                         <span th:each="player : ${replay.players}">
                             <span th:text="${player.name}"></span><span> </span>
@@ -70,13 +56,8 @@
                     </td>
                     <td><span th:text="${replay.downloads}" /></td>
                     <td>
-                        <form th:method="GET" th:action="@{/{id}/download(id=${replay.id})}">
+                        <form th:method="POST" th:action="@{/{id}/downloadtl(id=${replay.id})}">
                             <input type="submit" value="Download"/>
-                        </form>
-                    </td>
-                    <td>
-                        <form th:method="POST" th:action="@{/{id}/player(id=${replay.id})}">
-                            <input type="submit" value="Add Random Player"/>
                         </form>
                     </td>
                 </tr>

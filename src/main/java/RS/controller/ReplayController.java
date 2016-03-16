@@ -4,11 +4,10 @@ import RS.domain.Player;
 import RS.domain.Replay;
 import RS.repository.PlayerRepository;
 import RS.repository.ReplayRepository;
+import arkhados.replay.ReplayHeader;
+import arkhados.replay.ReplayMetadataSerializer;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.nio.ByteBuffer;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,21 +56,7 @@ public class ReplayController {
         return "replays";
     }
 
-    @Transactional
-    @RequestMapping(value = "/searchreplaystl", method = RequestMethod.GET)
-    public String searchReplays(Model model, @RequestParam String name, @RequestParam String version) {
-        Pageable pageable = new PageRequest(0, 30, Sort.Direction.DESC, "gameDate");
-        Page<Replay> replayPage;
-        if (version.equals("any")) {
-            replayPage = replayRepository.findByNameContaining(pageable, name);
-        } else {
-            replayPage = replayRepository.findByNameContainingAndVersion(pageable, name, version);
-        }
-        model.addAttribute("replays", replayPage.getContent());
-        return "replays";
-    }
-
-    @RequestMapping(value = "/newreplay", method = RequestMethod.POST)
+    @RequestMapping(value = "/newreplaytl", method = RequestMethod.POST)
     public String addReplay(@RequestParam("replay") MultipartFile file, @Valid @ModelAttribute Replay replay,
             BindingResult result, RedirectAttributes redirectAttributes) throws IOException {
         if (!file.getOriginalFilename().contains(".rep")) {
@@ -82,56 +67,38 @@ public class ReplayController {
             return "redirect:/";
         }
 
-        replay.setGameDate(new Date());
+        ReplayMetadataSerializer ser = new ReplayMetadataSerializer();
+        ReplayHeader header = ser.readObject(ByteBuffer.wrap(file.getBytes()), ReplayHeader.class);
 
         replay.setContent("download_url");
-        
-        replay.setGameMode("Deathmatch");
-        
-        replay.setArena("Pillar Arena");
 
-        List<Player> players = new ArrayList<Player>();
-        replay.setPlayers(players);
+        replay.setGameDate(header.getDate());
 
-        replay.setDownloads(new Random().nextInt(10)); // temporary solution
+        replay.setGameMode(header.getGameMode());
+
+        replay.setVersion(header.getVersion());
+
+        replay.setArena(header.getArena());
+
+        replay.setDownloads(0);
 
         replayRepository.save(replay);
 
-        return "redirect:/";
-    }
-
-    @RequestMapping(value = "/{id}/download", method = RequestMethod.GET)
-    public String getFile(@PathVariable Long id) {
-        Replay replay = replayRepository.findOne(id);
-        return "redirect:/"; // downloading inactive for now - check older commits etc. for download related code
-    }
-
-    @RequestMapping(value = "/{id}/player", method = RequestMethod.POST)
-    public String addRandomPlayer(@PathVariable Long id) {
-        Replay replay = replayRepository.findOne(id);
-
-        Player player = new Player();
-        ArrayList<String> potentialNames = new ArrayList<String>();
-        potentialNames.add("dynarii");
-        potentialNames.add("rngvillain");
-        potentialNames.add("triplesauced");
-        player.setName(potentialNames.get(new Random().nextInt(3)));
-        player.setReplay(replay);
-
-        playerRepository.save(player);
+        for (String playerName : header.getPlayers().values()) {
+            Player player = new Player();
+            player.setName(playerName);
+            player.setReplay(replay);
+            playerRepository.save(player);
+        }
 
         return "redirect:/";
     }
 
-    // TODO: changing downloads value still causes data exception: string data, right truncation?
-    @RequestMapping(value = "/{id}/adddownload", method = RequestMethod.POST)
-    public String addDownload(@PathVariable Long id) {
+    @RequestMapping(value = "/{id}/downloadtl", method = RequestMethod.POST)
+    public String downloadReplay(@PathVariable Long id) {
         Replay replay = replayRepository.findOne(id);
-
         replay.setDownloads(replay.getDownloads() + 1);
-
         replayRepository.save(replay);
-
         return "redirect:/";
     }
 }

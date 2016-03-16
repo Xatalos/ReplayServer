@@ -8,7 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
@@ -16,30 +15,23 @@ public class Replay extends AbstractPersistable<Long> {
 
     private String content;
 
-    @NotBlank
-    private String name;
-    
     @Temporal(TemporalType.TIMESTAMP)
     private Date gameDate;
-    
+
     private String version;
-    
+
     private String gameMode;
-    
+
     private String arena;
-    
+
     @OneToMany(mappedBy = "replay", fetch = FetchType.EAGER)
     private List<Player> players;
-    
+
     @Column(length = 2147483647, name = "downloads")
     private int downloads;
 
     public String getContent() {
         return content;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Date getGameDate() {
@@ -56,10 +48,6 @@ public class Replay extends AbstractPersistable<Long> {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setGameDate(Date gameDate) {
