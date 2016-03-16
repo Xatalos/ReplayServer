@@ -36,7 +36,7 @@ public class ReplayController {
     @Autowired
     private PlayerRepository playerRepository;
 
-    @RequestMapping(method = RequestMethod.GET)
+    //@RequestMapping(method = RequestMethod.GET)
     public String listReplays(Model model) {
         Pageable pageable = new PageRequest(0, 30, Sort.Direction.DESC, "gameDate");
         Page<Replay> replayPage = replayRepository.findAll(pageable);

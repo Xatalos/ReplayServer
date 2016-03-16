@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+
+
+    <!-- External / Imported CSS -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+
+    <!-- Custom SASS compiled CSS -->
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- jQuery -->
+    <script src="js/jquery.js" type="text/javascript"></script>
+
+    <!-- TypeScript compiled JavaScript -->
+    <script src="js/main.js" type="text/javascript"></script>
+
+    <title>Replay Server</title>
+
+  </head>
+  <body>
+    <div id="background">
+      <div id="sidebar">
+        <form id="search-form" class="form">
+          <h4>Search</h4>
+          <div class="row">
+            <div class="four columns">
+              <label for="version">Version</label>
+              <select class="u-full-width" id="search-version" disabled>
+                <option value="any">Any</option>
+                <option value="0.6.0">0.6.0</option>
+                <option value="0.5.0">0.5.0</option>
+              </select>
+              <select class="u-full-width" id="search-version-cond" disabled>
+                <option value="exactly">Exactly</option>
+                <option value="or-older">Or older</option>
+                <option value="or-newer">Or newer</option>
+              </select>
+            </div>
+            <div class="four columns">
+              <label>Downloads</label>
+              <input class="u-full-width" type="number" placeholder="1600" id="search-downloads" disabled></input>
+              <select class="u-full-width" id="search-downloads-cond" disabled>
+                <option value="exactly">Exactly</option>
+                <option value="or-more">Or more</option>
+                <option value="or-less">Or less</option>
+              </select>
+            </div>
+            <div class="four columns">
+              <label>Arena</label>
+              <select class="u-full-width" id="search-downloads-cond" disabled>
+                <option value="exactly">Pillar Arena</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <label class="sidenote">Search disabled momentarily as of latest REST API update.</label>
+            <input type="submit" value="Search" id="search" disabled></input>
+          </div>
+        </form>
+        <form id="upload-form" class="form" method="POST" action="/newreplay" enctype="multipart/form-data">
+          <h4>Upload</h4>
+          <input class="u-full-width" type="file" name="replay" id="replay" class="button"/>
+          <input type="submit" value="Upload"></input>
+        </form>
+      </div>
+      <div id="area">
+        <table class="u-full-width">
+          <thead>
+            <tr>
+              <th class="version">Version</th>
+              <th class="arena">Arena</th>
+              <th class="date">Date</th>
+              <th class="downloads">Downloads</th>
+              <th class="download">Download</th>
+            </tr>
+          </thead>
+          <tbody id="replay-area">
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

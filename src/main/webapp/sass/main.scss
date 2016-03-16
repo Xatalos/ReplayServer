@@ -1,0 +1,129 @@
+$bg-color : #303035;
+$sidebar-color : $bg-color + #111;
+$sidebar-width: 25%;
+
+$replay-thumbnail-bg: $bg-color - #111;
+
+$area-padding: 2%;
+
+$form-color: $sidebar-color + #111;
+
+$text-color: #cccccc;
+
+body, html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+}
+
+#background {
+  background-color: $bg-color;
+  color: $text-color;
+  min-height: 100%;
+  width: 100%;
+}
+
+#sidebar {
+  position: fixed;
+  background-color: $sidebar-color;
+  height: 100%;
+  width: $sidebar-width;
+  display: inline-block;
+}
+
+#area {
+  position: relative;
+  left: $sidebar-width;
+  width: 100% - $sidebar-width - $area-padding * 2;
+  display: inline-block;
+  padding: $area-padding;
+  overflow: auto;
+  margin-top: 4vmin;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.version, .arena, .downloads, .date { width: 8vw; }
+
+form.form {
+  padding: 5%;
+}
+
+thead {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  margin-left: -$area-padding;
+  padding-left: $area-padding;
+  background-color: $bg-color + #080808;
+}
+
+tbody {
+  padding-top: 125%;
+  overflow: hidden;
+  width: 100%;
+}
+
+.interactive-menuelement {
+    background-color: $form-color;
+    color: $text-color;
+    border-color: $form-color + #111;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+
+}
+
+.interactive-menuelement:hover {
+    color: $text-color + #111;
+}
+
+.interactive-menuelement:focus {
+    color: $text-color - #111;
+    border-color: $form-color + #333;
+}
+
+.interactive-menuelement:disabled {
+  background-color: $form-color - #111;
+  color: $text-color -#222;
+}
+
+.interactive-menuelement:hover:disabled {
+  color: $text-color -#222;
+  border-color: $form-color + #111;
+}
+
+
+input:not([type=file]) {
+  @extend .interactive-menuelement;
+}
+
+button {
+  @extend .interactive-menuelement;
+}
+
+select {
+  @extend .interactive-menuelement;
+}
+
+label.sidenote {
+  font-weight: 100;
+  font-style: italic;
+  color: $text-color - #111;
+}
+
+th, td {
+  border-color: $sidebar-color !important;
+  color: $text-color;
+  font-weight: 100;
+  overflow: hidden;
+}
+
+thead tr th {
+  border: 0;
+  width: 40vw;
+  font-weight: bolder !important;
+}

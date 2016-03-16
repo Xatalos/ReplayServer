@@ -1,0 +1,89 @@
+body, html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: auto; }
+
+#background {
+  background-color: #303035;
+  color: #cccccc;
+  min-height: 100%;
+  width: 100%; }
+
+#sidebar {
+  position: fixed;
+  background-color: #414146;
+  height: 100%;
+  width: 25%;
+  display: inline-block; }
+
+#area {
+  position: relative;
+  left: 25%;
+  width: 71%;
+  display: inline-block;
+  padding: 2%;
+  overflow: auto;
+  margin-top: 4vmin; }
+  #area p {
+    margin: 0;
+    padding: 0; }
+
+.version, .arena, .downloads, .date {
+  width: 8vw; }
+
+form.form {
+  padding: 5%; }
+
+thead {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  margin-left: -2%;
+  padding-left: 2%;
+  background-color: #38383d; }
+
+tbody {
+  padding-top: 125%;
+  overflow: hidden;
+  width: 100%; }
+
+.interactive-menuelement, input:not([type=file]), button, select {
+  background-color: #525257;
+  color: #cccccc;
+  border-color: #636368;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s; }
+
+.interactive-menuelement:hover, input:hover:not([type=file]), button:hover, select:hover {
+  color: #dddddd; }
+
+.interactive-menuelement:focus, input:focus:not([type=file]), button:focus, select:focus {
+  color: #bbbbbb;
+  border-color: #85858a; }
+
+.interactive-menuelement:disabled, input:disabled:not([type=file]), button:disabled, select:disabled {
+  background-color: #414146;
+  color: #aaaaaa; }
+
+.interactive-menuelement:hover:disabled, input:hover:disabled:not([type=file]), button:hover:disabled, select:hover:disabled {
+  color: #aaaaaa;
+  border-color: #636368; }
+
+label.sidenote {
+  font-weight: 100;
+  font-style: italic;
+  color: #bbbbbb; }
+
+th, td {
+  border-color: #414146 !important;
+  color: #cccccc;
+  font-weight: 100;
+  overflow: hidden; }
+
+thead tr th {
+  border: 0;
+  width: 40vw;
+  font-weight: bolder !important; }
+
+/*# sourceMappingURL=main.css.map */
