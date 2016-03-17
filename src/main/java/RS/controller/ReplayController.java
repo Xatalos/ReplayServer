@@ -55,24 +55,40 @@ public class ReplayController {
     @Transactional
     @RequestMapping(value = "/searchreplays", method = RequestMethod.GET)
     public SearchResult searchReplays(@RequestParam String version,
-            @RequestParam String arena, @RequestParam String mode) {
-        // TODO: search by player... and downloads?
+            @RequestParam String arena, @RequestParam String mode, 
+            @RequestParam String player) {
         Pageable pageable = new PageRequest(0, 30, Sort.Direction.DESC, "gameDate");
         Page<Replay> replayPage = replayRepository.findAll(pageable);
-        if (!version.equals("any") && mode.equals("any") && arena.equals("any")) {
+        if (!version.equals("any") && mode.equals("any") && arena.equals("any") && player.isEmpty()) {
             replayPage = replayRepository.findByVersion(pageable, version);
-        } else if (version.equals("any") && !mode.equals("any") && arena.equals("any")) {
+        } else if (version.equals("any") && !mode.equals("any") && arena.equals("any") && player.isEmpty()) {
             replayPage = replayRepository.findByGameMode(pageable, version);
-        } else if (version.equals("any") && mode.equals("any") && !arena.equals("any")) {
+        } else if (version.equals("any") && mode.equals("any") && !arena.equals("any") && player.isEmpty()) {
             replayPage = replayRepository.findByArena(pageable, version);
-        } else if (!version.equals("any") && !mode.equals("any") && arena.equals("any")) {
+        } else if (version.equals("any") && mode.equals("any") && arena.equals("any") && !player.isEmpty()) {
+            replayPage = replayRepository.findByPlayers_Name(pageable, player);
+        } else if (!version.equals("any") && !mode.equals("any") && arena.equals("any") && player.isEmpty()) {
             replayPage = replayRepository.findByVersionAndGameMode(pageable, version, mode);
-        } else if (!version.equals("any") && mode.equals("any") && !arena.equals("any")) {
+        } else if (!version.equals("any") && mode.equals("any") && !arena.equals("any") && player.isEmpty()) {
             replayPage = replayRepository.findByVersionAndArena(pageable, version, arena);
-        } else if (version.equals("any") && !mode.equals("any") && !arena.equals("any")) {
+        } else if (version.equals("any") && !mode.equals("any") && !arena.equals("any") && player.isEmpty()) {
             replayPage = replayRepository.findByGameModeAndArena(pageable, mode, arena);
-        } else if (!version.equals("any") && !mode.equals("any") && !arena.equals("any")) {
+        } else if (!version.equals("any") && mode.equals("any") && arena.equals("any") && !player.isEmpty()) {
+            replayPage = replayRepository.findByVersionAndPlayers_Name(pageable, version, player);
+        } else if (version.equals("any") && mode.equals("any") && !arena.equals("any") && !player.isEmpty()) {
+            replayPage = replayRepository.findByPlayers_NameAndArena(pageable, player, arena);
+        } else if (version.equals("any") && !mode.equals("any") && arena.equals("any") && !player.isEmpty()) {
+            replayPage = replayRepository.findByPlayers_NameAndGameMode(pageable, player, mode);
+        } else if (!version.equals("any") && !mode.equals("any") && !arena.equals("any") && player.isEmpty()) {
             replayPage = replayRepository.findByVersionAndArenaAndGameMode(pageable, version, arena, mode);
+        } else if (version.equals("any") && !mode.equals("any") && !arena.equals("any") && !player.isEmpty()) {
+            replayPage = replayRepository.findByPlayers_NameAndArenaAndGameMode(pageable, player, arena, mode);
+        } else if (!version.equals("any") && !mode.equals("any") && arena.equals("any") && !player.isEmpty()) {
+            replayPage = replayRepository.findByVersionAndPlayers_NameAndGameMode(pageable, version, player, mode);
+        } else if (!version.equals("any") && mode.equals("any") && !arena.equals("any") && !player.isEmpty()) {
+            replayPage = replayRepository.findByVersionAndArenaAndPlayers_Name(pageable, version, arena, player);
+        } else if (!version.equals("any") && !mode.equals("any") && !arena.equals("any") && !player.isEmpty()) {
+            replayPage = replayRepository.findByVersionAndArenaAndGameModeAndPlayers_Name(pageable, version, arena, mode, player);
         }
         return new SearchResult(replayPage.getContent());
     }
