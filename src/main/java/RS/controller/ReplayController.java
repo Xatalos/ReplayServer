@@ -8,6 +8,7 @@ import RS.repository.ReplayRepository;
 import RS.util.SearchResult;
 import arkhados.replay.ReplayHeader;
 import arkhados.replay.ReplayMetadataSerializer;
+import com.mysema.query.BooleanBuilder;
 import com.mysema.query.types.expr.BooleanExpression;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -61,45 +62,28 @@ public class ReplayController {
     public SearchResult searchReplays(@RequestParam String version,
             @RequestParam String arena, @RequestParam String mode,
             @RequestParam String player) {
-        Pageable pageable = new PageRequest(0, 30, Sort.Direction.DESC, "gameDate");
-        Page<Replay> replayPage = replayRepository.findAll(pageable);
-        if (!version.equals("any") && mode.equals("any") && arena.equals("any") && player.isEmpty()) {
-            replayPage = replayRepository.findByVersion(pageable, version);
-        } else if (version.equals("any") && !mode.equals("any") && arena.equals("any") && player.isEmpty()) {
-            replayPage = replayRepository.findByGameMode(pageable, version);
-        } else if (version.equals("any") && mode.equals("any") && !arena.equals("any") && player.isEmpty()) {
-            replayPage = replayRepository.findByArena(pageable, version);
-        } else if (version.equals("any") && mode.equals("any") && arena.equals("any") && !player.isEmpty()) {
-            replayPage = replayRepository.findByPlayers_Name(pageable, player);
-        } else if (!version.equals("any") && !mode.equals("any") && arena.equals("any") && player.isEmpty()) {
-            replayPage = replayRepository.findByVersionAndGameMode(pageable, version, mode);
-        } else if (!version.equals("any") && mode.equals("any") && !arena.equals("any") && player.isEmpty()) {
-            replayPage = replayRepository.findByVersionAndArena(pageable, version, arena);
-        } else if (version.equals("any") && !mode.equals("any") && !arena.equals("any") && player.isEmpty()) {
-            replayPage = replayRepository.findByGameModeAndArena(pageable, mode, arena);
-        } else if (!version.equals("any") && mode.equals("any") && arena.equals("any") && !player.isEmpty()) {
-            replayPage = replayRepository.findByVersionAndPlayers_Name(pageable, version, player);
-        } else if (version.equals("any") && mode.equals("any") && !arena.equals("any") && !player.isEmpty()) {
-            replayPage = replayRepository.findByPlayers_NameAndArena(pageable, player, arena);
-        } else if (version.equals("any") && !mode.equals("any") && arena.equals("any") && !player.isEmpty()) {
-            replayPage = replayRepository.findByPlayers_NameAndGameMode(pageable, player, mode);
-        } else if (!version.equals("any") && !mode.equals("any") && !arena.equals("any") && player.isEmpty()) {
-            replayPage = replayRepository.findByVersionAndArenaAndGameMode(pageable, version, arena, mode);
-        } else if (version.equals("any") && !mode.equals("any") && !arena.equals("any") && !player.isEmpty()) {
-            replayPage = replayRepository.findByPlayers_NameAndArenaAndGameMode(pageable, player, arena, mode);
-        } else if (!version.equals("any") && !mode.equals("any") && arena.equals("any") && !player.isEmpty()) {
-            replayPage = replayRepository.findByVersionAndPlayers_NameAndGameMode(pageable, version, player, mode);
-        } else if (!version.equals("any") && mode.equals("any") && !arena.equals("any") && !player.isEmpty()) {
-            replayPage = replayRepository.findByVersionAndArenaAndPlayers_Name(pageable, version, arena, player);
-        } else if (!version.equals("any") && !mode.equals("any") && !arena.equals("any") && !player.isEmpty()) {
-            replayPage = replayRepository.findByVersionAndArenaAndGameModeAndPlayers_Name(pageable, version, arena, mode, player);
-        }
         QReplay replay = QReplay.replay;
-        BooleanExpression isArena = replay.version.eq("0.6");
-        Iterable<Replay> replays = replayRepository.findAll(isArena);
-        List<Replay> wooList = new ArrayList<Replay>();
-        replays.forEach(wooList::add);
-        return new SearchResult(wooList);
+        BooleanExpression hasCorrectArena = replay.arena.eq(arena);
+        BooleanExpression hasCorrectVersion = replay.version.eq(version);
+        BooleanExpression hasCorrectGameMode = replay.gameMode.eq(mode);
+        BooleanExpression hasCorrectPlayer = replay.players.any().name.eq(player);
+        BooleanBuilder searchTerms = new BooleanBuilder();
+        if (!version.equals("any")) {
+            searchTerms = searchTerms.and(hasCorrectVersion);
+        }
+        if (!mode.equals("any")) {
+            searchTerms.and(hasCorrectGameMode);
+        }
+        if (!arena.equals("any")) {
+            searchTerms.and(hasCorrectArena);
+        }
+        if (!player.isEmpty()) {
+            searchTerms.and(hasCorrectPlayer);
+        }
+        Iterable<Replay> tempReplays = replayRepository.findAll(searchTerms);
+        List<Replay> replays = new ArrayList<Replay>();
+        tempReplays.forEach(replays::add);
+        return new SearchResult(replays);
     }
 
     @RequestMapping(value = "/newreplay", method = RequestMethod.POST)
