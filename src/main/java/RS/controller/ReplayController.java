@@ -59,26 +59,43 @@ public class ReplayController {
     @CrossOrigin
     @Transactional
     @RequestMapping(value = "/searchreplays", method = RequestMethod.GET)
-    public SearchResult searchReplays(@RequestParam String version,
-            @RequestParam String arena, @RequestParam String mode,
-            @RequestParam String player) {
+    public SearchResult searchReplays(@RequestParam String version, @RequestParam String versionoperator,
+            @RequestParam(value = "arena") String[] arenas, @RequestParam(value = "mode") String[] modes,
+            @RequestParam(value = "player") String[] players) {
         QReplay replay = QReplay.replay;
-        BooleanExpression hasCorrectArena = replay.arena.eq(arena);
-        BooleanExpression hasCorrectVersion = replay.version.eq(version);
-        BooleanExpression hasCorrectGameMode = replay.gameMode.eq(mode);
-        BooleanExpression hasCorrectPlayer = replay.players.any().name.eq(player);
         BooleanBuilder searchTerms = new BooleanBuilder();
         if (!version.equals("any")) {
+            BooleanExpression hasCorrectVersion;
+            if (versionoperator.equals("or-less")) {
+                hasCorrectVersion = replay.version.loe(version);
+            } else if (versionoperator.equals("or-more")) {
+                hasCorrectVersion = replay.version.goe(version);
+            } else {
+                hasCorrectVersion = replay.version.eq(version);
+            }
             searchTerms = searchTerms.and(hasCorrectVersion);
         }
-        if (!mode.equals("any")) {
-            searchTerms.and(hasCorrectGameMode);
+        BooleanBuilder modeChoices = new BooleanBuilder();
+        for (String mode : modes) {
+            if (!mode.equals("any")) {
+                BooleanExpression hasCorrectGameMode = replay.gameMode.equalsIgnoreCase(mode);
+                modeChoices.or(hasCorrectGameMode);
+            }
         }
-        if (!arena.equals("any")) {
-            searchTerms.and(hasCorrectArena);
+        searchTerms.andAnyOf(modeChoices);
+        BooleanBuilder arenaChoices = new BooleanBuilder();
+        for (String arena : arenas) {
+            if (!arena.equals("any")) {
+                BooleanExpression hasCorrectArena = replay.arena.equalsIgnoreCase(arena);
+                arenaChoices.or(hasCorrectArena);
+            }
         }
-        if (!player.isEmpty()) {
-            searchTerms.and(hasCorrectPlayer);
+        searchTerms.andAnyOf(arenaChoices);
+        for (String player : players) {
+            if (!player.isEmpty()) {
+                BooleanExpression hasCorrectPlayer = replay.players.any().name.equalsIgnoreCase(player);
+                searchTerms.and(hasCorrectPlayer);
+            }
         }
         Iterable<Replay> tempReplays = replayRepository.findAll(searchTerms);
         List<Replay> replays = new ArrayList<Replay>();
