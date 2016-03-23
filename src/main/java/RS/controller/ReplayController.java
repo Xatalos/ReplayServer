@@ -1,14 +1,18 @@
 package RS.controller;
 
 import RS.domain.Player;
+import RS.domain.QReplay;
 import RS.domain.Replay;
 import RS.repository.PlayerRepository;
 import RS.repository.ReplayRepository;
 import RS.util.SearchResult;
 import arkhados.replay.ReplayHeader;
 import arkhados.replay.ReplayMetadataSerializer;
+import com.mysema.query.types.expr.BooleanExpression;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -55,7 +59,7 @@ public class ReplayController {
     @Transactional
     @RequestMapping(value = "/searchreplays", method = RequestMethod.GET)
     public SearchResult searchReplays(@RequestParam String version,
-            @RequestParam String arena, @RequestParam String mode, 
+            @RequestParam String arena, @RequestParam String mode,
             @RequestParam String player) {
         Pageable pageable = new PageRequest(0, 30, Sort.Direction.DESC, "gameDate");
         Page<Replay> replayPage = replayRepository.findAll(pageable);
@@ -90,7 +94,12 @@ public class ReplayController {
         } else if (!version.equals("any") && !mode.equals("any") && !arena.equals("any") && !player.isEmpty()) {
             replayPage = replayRepository.findByVersionAndArenaAndGameModeAndPlayers_Name(pageable, version, arena, mode, player);
         }
-        return new SearchResult(replayPage.getContent());
+        QReplay replay = QReplay.replay;
+        BooleanExpression isArena = replay.version.eq("0.6");
+        Iterable<Replay> replays = replayRepository.findAll(isArena);
+        List<Replay> wooList = new ArrayList<Replay>();
+        replays.forEach(wooList::add);
+        return new SearchResult(wooList);
     }
 
     @RequestMapping(value = "/newreplay", method = RequestMethod.POST)
