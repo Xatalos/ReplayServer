@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -111,10 +112,17 @@ public class ReplayController {
         tempReplays.forEach(replays::add);
         return new SearchResult(replays);
     }
+    
+    @CrossOrigin
+    @RequestMapping(value = "/addreplayerror", method = RequestMethod.GET)
+    public String showAddReplayError() {
+        return "No proper replay file was added. Please check that your file is actually an Arkhados replay!";
+    }
 
     @RequestMapping(value = "/newreplay", method = RequestMethod.POST)
-    public void addReplay(@RequestParam("replay") MultipartFile file) throws IOException {
+    public void addReplay(@RequestParam("replay") MultipartFile file, HttpServletResponse response) throws IOException {
         if (!file.getOriginalFilename().contains(".rep")) {
+            response.sendRedirect("/addreplayerror");
             return;
         }
 
@@ -136,12 +144,14 @@ public class ReplayController {
             player.setReplay(replay);
             playerRepository.save(player);
         }
+        response.sendRedirect("/");
     }
 
     @RequestMapping(value = "/{id}/download", method = RequestMethod.POST)
-    public void downloadReplay(@PathVariable Long id) {
+    public void downloadReplay(@PathVariable Long id, HttpServletResponse response) throws IOException {
         Replay replay = replayRepository.findOne(id);
         replay.setDownloads(replay.getDownloads() + 1);
         replayRepository.save(replay);
+        response.sendRedirect("/");
     }
 }
