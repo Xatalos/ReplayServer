@@ -112,17 +112,23 @@ public class ReplayController {
         tempReplays.forEach(replays::add);
         return new SearchResult(replays);
     }
+
+    @CrossOrigin
+    @RequestMapping(value = "/incorrectfileerror", method = RequestMethod.GET)
+    public String showIncorrectFileError() {
+        return "You didn't give a proper replay file. Please check that your file is actually an Arkhados replay!";
+    }
     
     @CrossOrigin
-    @RequestMapping(value = "/addreplayerror", method = RequestMethod.GET)
-    public String showAddReplayError() {
-        return "No proper replay file was added. Please check that your file is actually an Arkhados replay!";
+    @RequestMapping(value = "/duplicatefileerror", method = RequestMethod.GET)
+    public String showDuplicateFileError() {
+        return "This replay already exists in the database!";
     }
 
     @RequestMapping(value = "/newreplay", method = RequestMethod.POST)
     public void addReplay(@RequestParam("replay") MultipartFile file, HttpServletResponse response) throws IOException {
         if (!file.getOriginalFilename().contains(".rep")) {
-            response.sendRedirect("/addreplayerror");
+            response.sendRedirect("/incorrectfileerror");
             return;
         }
 
@@ -136,6 +142,11 @@ public class ReplayController {
         replay.setVersion(header.getVersion());
         replay.setArena(header.getArena());
         replay.setDownloads(0);
+
+        if (!replayRepository.findByGameDate(replay.getGameDate()).isEmpty()) {
+            response.sendRedirect("/duplicatefileerror");
+            return;
+        }
         replayRepository.save(replay);
 
         for (String playerName : header.getPlayers().values()) {
