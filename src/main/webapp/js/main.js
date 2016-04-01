@@ -37,25 +37,40 @@ function create_replay(replay) {
     var date_td = $(document.createElement("td"));
     date_td.addClass("date");
     date_td.text(make_date_sensible(new Date(replay.gameDate)));
+    var players_td = $(document.createElement("td"));
+    players_td.addClass("players");
+    for (var i in replay.players) {
+        players_td.append(replay.players[i].name + " ");
+    }
+    date_td.text(make_date_sensible(new Date(replay.gameDate)));
     var downloads_td = $(document.createElement("td"));
     downloads_td.addClass("downloads");
     downloads_td.text(replay.downloads);
     var download_td = $(document.createElement("td"));
     download_td.addClass("download");
+    var download_form = $(document.createElement("form"));
+    download_form.attr("method", "POST");
+    download_form.attr("action", "/" + replay.id + "/download");
+    download_form.appendTo(download_td);
     var download_button = $(document.createElement("input"));
     download_button.attr("type", "submit");
     download_button.attr("value", "Download");
-    download_button.appendTo(download_td);
+    download_button.appendTo(download_form);
     tr.append(version_td);
     tr.append(arena_td);
     tr.append(date_td);
+    tr.append(players_td);
     tr.append(downloads_td);
     tr.append(download_td);
     tr.appendTo(replay_area);
 }
 function make_date_sensible(date) {
     var y = date.getUTCFullYear();
-    var m = date.getUTCMonth() + 1;
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"];
+    var m = monthNames[date.getUTCMonth()];
     var d = date.getUTCDate() + 1;
-    return d + "." + m + "." + y;
+    var h = date.getUTCHours();
+    var min = date.getUTCMinutes();
+    return d + " " + m + " " + y + " " + h + ":" + min;
 }
