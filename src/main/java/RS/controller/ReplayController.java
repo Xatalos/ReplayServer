@@ -5,9 +5,11 @@ import RS.domain.QReplay;
 import RS.domain.Replay;
 import RS.repository.PlayerRepository;
 import RS.repository.ReplayRepository;
+import RS.s3.S3Wrapper;
 import RS.util.SearchResult;
 import arkhados.replay.ReplayHeader;
 import arkhados.replay.ReplayMetadataSerializer;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.mysema.query.BooleanBuilder;
 import com.mysema.query.types.expr.BooleanExpression;
 import java.io.IOException;
@@ -36,6 +38,8 @@ public class ReplayController {
     private ReplayRepository replayRepository;
     @Autowired
     private PlayerRepository playerRepository;
+    @Autowired
+    private S3Wrapper s3Wrapper;
 
     @CrossOrigin // allows AJAX calls from other websites
     @RequestMapping(value = "/replays", method = RequestMethod.GET)
@@ -118,7 +122,7 @@ public class ReplayController {
     public String showIncorrectFileError() {
         return "You didn't give a proper replay file. Please check that your file is actually an Arkhados replay!";
     }
-    
+
     @CrossOrigin
     @RequestMapping(value = "/duplicatefileerror", method = RequestMethod.GET)
     public String showDuplicateFileError() {
