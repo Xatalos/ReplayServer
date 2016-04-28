@@ -136,7 +136,7 @@ public class ReplayController {
         return s3Wrapper.list();
     }
 
-    @RequestMapping(value = "/newreplay", method = RequestMethod.POST)
+    @RequestMapping(value = "/newreplay", method = RequestMethod.PUT)
     public void addReplay(@RequestParam("replay") MultipartFile file, HttpServletResponse response) throws IOException {
         if (!file.getOriginalFilename().contains(".rep")) {
             response.sendRedirect("/incorrectfileerror");
@@ -170,7 +170,7 @@ public class ReplayController {
         response.sendRedirect("/");
     }
 
-    @RequestMapping(value = "/{id}/download", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/download", method = RequestMethod.PUT)
     public void downloadReplay(@PathVariable Long id, HttpServletResponse response) throws IOException {
         Replay replay = replayRepository.findOne(id);
         replay.setDownloads(replay.getDownloads() + 1);

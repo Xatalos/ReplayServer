@@ -49,7 +49,7 @@ function create_replay(replay) {
     var download_td = $(document.createElement("td"));
     download_td.addClass("download");
     var download_form = $(document.createElement("form"));
-    download_form.attr("method", "POST");
+    download_form.attr("method", "PUT");
     download_form.attr("action", "/" + replay.id + "/download");
     download_form.appendTo(download_td);
     var download_button = $(document.createElement("input"));
