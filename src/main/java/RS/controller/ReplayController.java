@@ -5,11 +5,10 @@ import RS.domain.QReplay;
 import RS.domain.Replay;
 import RS.repository.PlayerRepository;
 import RS.repository.ReplayRepository;
-import RS.s3.S3Wrapper;
+import RS.s3.S3Service;
 import RS.util.SearchResult;
 import arkhados.replay.ReplayHeader;
 import arkhados.replay.ReplayMetadataSerializer;
-import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.mysema.query.BooleanBuilder;
 import com.mysema.query.types.expr.BooleanExpression;
@@ -40,7 +39,7 @@ public class ReplayController {
     @Autowired
     private PlayerRepository playerRepository;
     @Autowired
-    private S3Wrapper s3Wrapper;
+    private S3Service s3Service;
 
     @CrossOrigin // allows AJAX calls from other websites
     @RequestMapping(value = "/replays", method = RequestMethod.GET)
@@ -133,7 +132,7 @@ public class ReplayController {
     @CrossOrigin
     @RequestMapping(value = "/s3test", method = RequestMethod.GET)
     public List<S3ObjectSummary> s3Test() {
-        return s3Wrapper.list();
+        return s3Service.listObjects();
     }
 
     @RequestMapping(value = "/newreplay", method = RequestMethod.PUT)
@@ -166,7 +165,7 @@ public class ReplayController {
             player.setReplay(replay);
             playerRepository.save(player);
         }
-        s3Wrapper.upload(file);
+        s3Service.uploadFile(file);
         response.sendRedirect("/");
     }
 
