@@ -1,3 +1,4 @@
 /target/
 /src/main/webapp/.sass-cache/
 run.sh
+/src/main/resources/application.properties
