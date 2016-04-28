@@ -9,6 +9,7 @@ import RS.s3.S3Wrapper;
 import RS.util.SearchResult;
 import arkhados.replay.ReplayHeader;
 import arkhados.replay.ReplayMetadataSerializer;
+import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.mysema.query.BooleanBuilder;
 import com.mysema.query.types.expr.BooleanExpression;
@@ -128,6 +129,12 @@ public class ReplayController {
     public String showDuplicateFileError() {
         return "This replay already exists in the database!";
     }
+    
+    @CrossOrigin
+    @RequestMapping(value = "/s3test", method = RequestMethod.GET)
+    public List<S3ObjectSummary> s3Test() {
+        return s3Wrapper.list();
+    }
 
     @RequestMapping(value = "/newreplay", method = RequestMethod.POST)
     public void addReplay(@RequestParam("replay") MultipartFile file, HttpServletResponse response) throws IOException {
@@ -159,6 +166,7 @@ public class ReplayController {
             player.setReplay(replay);
             playerRepository.save(player);
         }
+        s3Wrapper.upload(file);
         response.sendRedirect("/");
     }
 
