@@ -146,7 +146,7 @@ public class ReplayController {
         ReplayHeader header = ser.readObject(ByteBuffer.wrap(file.getBytes()), ReplayHeader.class);
 
         Replay replay = new Replay();
-        replay.setContent("download_url");
+        replay.setContent("http://" + s3Service.getBucketName() + ".s3.amazonaws.com/" + file.getOriginalFilename());
         replay.setGameDate(header.getDate());
         replay.setGameMode(header.getGameMode());
         replay.setVersion(header.getVersion());
@@ -174,6 +174,7 @@ public class ReplayController {
         Replay replay = replayRepository.findOne(id);
         replay.setDownloads(replay.getDownloads() + 1);
         replayRepository.save(replay);
+        s3Service.download(replayRepository.findOne(id).getContent());
         response.sendRedirect("/");
     }
 }

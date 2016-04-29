@@ -27,6 +27,10 @@ public class S3Service {
 
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
+        
+        public String getBucketName() {
+            return bucket;
+        }
 
 	private PutObjectResult upload(String filePath, String uploadKey) throws FileNotFoundException {
 		return upload(new FileInputStream(filePath), uploadKey);
