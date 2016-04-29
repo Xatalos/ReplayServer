@@ -174,7 +174,6 @@ public class ReplayController {
         Replay replay = replayRepository.findOne(id);
         replay.setDownloads(replay.getDownloads() + 1);
         replayRepository.save(replay);
-        s3Service.download(replayRepository.findOne(id).getContent());
-        response.sendRedirect("/");
+        response.sendRedirect(replayRepository.findOne(id).getContent());
     }
 }
