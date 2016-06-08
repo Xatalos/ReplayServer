@@ -8,6 +8,7 @@ interface Player {
 }
 
 interface Replay {
+  id: number;
   name: string;
   version: string;
   downloads: number;
@@ -66,14 +67,19 @@ function create_replay(replay: Replay) {
   downloads_td.text(replay.downloads)
   var download_td = $(document.createElement("td"));
   download_td.addClass("download")
+  var download_form = $(document.createElement("form"));
+  download_form.attr("method", "POST");
+  download_form.attr("action", "/" + replay.id + "/download");
+  download_form.appendTo(download_td);
   var download_button = $(document.createElement("input"));
   download_button.attr("type", "submit");
   download_button.attr("value", "Download");
-  download_button.appendTo(download_td)
+  download_button.appendTo(download_form);
 
   tr.append(version_td);
   tr.append(arena_td);
   tr.append(date_td);
+  tr.append(players_td);
   tr.append(downloads_td);
   tr.append(download_td);
   tr.appendTo(replay_area)
