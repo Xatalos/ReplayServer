@@ -3,11 +3,16 @@
 var replay_area
 var can_request_JSON = true
 
+interface Player {
+  name: string;
+}
+
 interface Replay {
   name: string;
   version: string;
   downloads: number;
   gameDate: number;
+  players: Player[];
   arena: string;
 }
 
@@ -50,6 +55,12 @@ function create_replay(replay: Replay) {
   var date_td = $(document.createElement("td"));
   date_td.addClass("date")
   date_td.text(make_date_sensible(new Date(replay.gameDate)))
+  var players_td = $(document.createElement("td"));
+  players_td.addClass("players");
+  for (var i in replay.players) {
+    players_td.append(replay.players[i].name + " ");
+  }
+  date_td.text(make_date_sensible(new Date(replay.gameDate)));
   var downloads_td = $(document.createElement("td"));
   downloads_td.addClass("downloads")
   downloads_td.text(replay.downloads)
@@ -70,7 +81,11 @@ function create_replay(replay: Replay) {
 
 function make_date_sensible(date: Date) {
   var y = date.getUTCFullYear();
-  var m = date.getUTCMonth() + 1;
+  var monthNames = ["January", "February", "March", "April", "May", "June",
+         "July", "August", "September", "October", "November", "December"];
+  var m = monthNames[date.getUTCMonth()];
   var d = date.getUTCDate() + 1;
-  return d + "." + m + "." + y
+  var h = date.getUTCHours();
+  var min = date.getUTCMinutes();
+  return d + " " + m + " " + y + " " + h + ":" + min;
 }
