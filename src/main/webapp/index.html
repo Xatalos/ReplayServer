@@ -27,24 +27,15 @@
           <div class="row">
             <div class="four columns">
               <label for="version">Version</label>
-              <select class="u-full-width" id="search-version" disabled>
+              <select class="u-full-width" id="search-version">
                 <option value="any">Any</option>
-                <option value="0.6.0">0.6.0</option>
-                <option value="0.5.0">0.5.0</option>
+                <option value="0.6">0.6</option>
+                <option value="0.7-dev">0.7-dev</option>
               </select>
-              <select class="u-full-width" id="search-version-cond" disabled>
+              <select class="u-full-width" id="search-version-cond">
                 <option value="exactly">Exactly</option>
-                <option value="or-older">Or older</option>
-                <option value="or-newer">Or newer</option>
-              </select>
-            </div>
-            <div class="four columns">
-              <label>Downloads</label>
-              <input class="u-full-width" type="number" placeholder="1600" id="search-downloads" disabled></input>
-              <select class="u-full-width" id="search-downloads-cond" disabled>
-                <option value="exactly">Exactly</option>
-                <option value="or-more">Or more</option>
-                <option value="or-less">Or less</option>
+                <option value="or-less">Or older</option>
+                <option value="or-more">Or newer</option>
               </select>
             </div>
             <div class="four columns">
@@ -55,8 +46,7 @@
             </div>
           </div>
           <div class="row">
-            <label class="sidenote">Search disabled momentarily as of latest REST API update.</label>
-            <input type="submit" value="Search" id="search" disabled></input>
+            <input type="submit" value="Search" id="search"></input>
           </div>
         </form>
         <form id="upload-form" class="form" method="POST" action="/newreplay" enctype="multipart/form-data">

@@ -10,12 +10,9 @@ function search() {
     if (!can_request_JSON) {
         return;
     }
-    var contains = $("#search-contains").val();
     var version = $("#search-version").val();
     //can_request_JSON = false
-    // REST API does not currently support seraching or filtering. :(
-    console.log("I would serach for replays with version " + version + " but REST API got a little dumber :(");
-    //$.getJSON("/searchreplays?name=" + contains + "&version=" + version, create_replays)
+    $.getJSON("/searchreplays?version=" + version, create_replays);
     return false;
 }
 function create_replays(data) {
@@ -37,18 +34,29 @@ function create_replay(replay) {
     var date_td = $(document.createElement("td"));
     date_td.addClass("date");
     date_td.text(make_date_sensible(new Date(replay.gameDate)));
+    var players_td = $(document.createElement("td"));
+    players_td.addClass("players");
+    for (var i in replay.players) {
+        players_td.append(replay.players[i].name + " ");
+    }
+    date_td.text(make_date_sensible(new Date(replay.gameDate)));
     var downloads_td = $(document.createElement("td"));
     downloads_td.addClass("downloads");
     downloads_td.text(replay.downloads);
     var download_td = $(document.createElement("td"));
     download_td.addClass("download");
+    var download_form = $(document.createElement("form"));
+    download_form.attr("method", "POST");
+    download_form.attr("action", "/" + replay.id + "/download");
+    download_form.appendTo(download_td);
     var download_button = $(document.createElement("input"));
     download_button.attr("type", "submit");
     download_button.attr("value", "Download");
-    download_button.appendTo(download_td);
+    download_button.appendTo(download_form);
     tr.append(version_td);
     tr.append(arena_td);
     tr.append(date_td);
+    tr.append(players_td);
     tr.append(downloads_td);
     tr.append(download_td);
     tr.appendTo(replay_area);

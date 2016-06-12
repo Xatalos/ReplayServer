@@ -10,12 +10,9 @@ function search() {
     if (!can_request_JSON) {
         return;
     }
-    var contains = $("#search-contains").val();
     var version = $("#search-version").val();
     //can_request_JSON = false
-    // REST API does not currently support seraching or filtering. :(
-    console.log("I would serach for replays with version " + version + " but REST API got a little dumber :(");
-    //$.getJSON("/searchreplays?name=" + contains + "&version=" + version, create_replays)
+    $.getJSON("/searchreplays?version=" + version, create_replays);
     return false;
 }
 function create_replays(data) {
