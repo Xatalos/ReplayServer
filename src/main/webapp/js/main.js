@@ -12,7 +12,8 @@ function search() {
     }
     var version = $("#search-version").val();
     var versionoperator = $("#search-version-cond").val();
-    $.getJSON("/searchreplays?version=" + version + "&versionoperator=" + versionoperator, create_replays);
+    var player = $("#player").val();
+    $.getJSON("/searchreplays?version=" + version + "&versionoperator=" + versionoperator + "&player=" + player, create_replays);
     return false;
 }
 function create_replays(data) {
